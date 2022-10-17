@@ -69,5 +69,6 @@ values(${nombre},${nacionalidad},${id_entrenadores},${set},);"´
     console.log(id);
     res.send("Ok")
   })
+  
   module.exports = app
   
