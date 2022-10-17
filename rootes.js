@@ -1,74 +1,94 @@
+const express = require("express");
+const app = express();
+const mysql = require("mysql2");
 
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "pma",
+  database: "tenis",
+});
 
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
+//select jugadores
+app.get("/jugadores", function (req, res) {
+  console.log("jugadores,ruta");
 
-app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(express.bodyParser());
-app.use(bodyParser.json())
+  // with placeholder
+  connection.query("SELECT * FROM  jugadores", function (err, results) {
+    res.send(results);
+  });
 
-app.listen(3000)
-console.log("servidor corriendo en http:localhost:3000");
+  console.log(req.method);
+});
 
-app.get('/jugadores', function (req, res) {
-    console.log('partidas,ruta');
-  
-    // with placeholder
-    connection.query(
-      'SELECT * FROM `jugadores`',
-      function (err, results) {
-        res.send(results)
-      }
-    );
-  
-    console.log(req.method);
-  })
-  
-  //creando un producto
-  app.post('/jugadores', function (req, res)
-  const nombre = req.body.nombre,
-  const nacionalidad = req.body.nacionalidad,
-  const id_entrenadores = req.body.id_entrenadores,
-  const set = req.body.set ,
-  const nombre_torneos = req.body.nombre_torneos,
-  const edad = req.body.edad,
-  const sexo = req.body.sexo,
-  const id_arbitros = req.body.id_arbitros,
-  const id_equipos = req.id_equipos,
-  const id_torneos = req.id_torneos,
-  const id_sanciones = req.id_sanciones,
+//creando un jugadores
+app.post("/jugadores", function (req, res) {
+  const data = req.body;
 
-  
- `"insert into jugadores(nombre,nacionalidad,id_entrenadores,`set`,nombre_torneos,edad,sexo,id_arbitros,id_equipos,id_torneos,id_sanciones) 
-values(${nombre},${nacionalidad},${id_entrenadores},${set},);"´
-  {
-    const partidas = req.body;
-  
-    console.log(req.method);
-    console.log(partidas);
-    res.send("Ok")
-  })
-  
-  //actualizando un producto
-  app.put('/partidass/:id', function (req, res) {
-    const id = req.params
-    const partida = req.body;
+  const nombre = data.nombre;
+  const nacionalidad = data.nacionalidad;
+  const id_entrenadores = data.id_entrenadores;
+  const sejuego = data.sejuego;
+  const nombre_torneos = data.nombre_torneos;
+  const edad = data.edad;
+  const sexo = data.sexo;
+  const id_arbitros = data.id_arbitros;
+  const id_equipos = data.id_equipos;
+  const id_torneos = data.id_torneos;
+  const id_sanciones = data.id_sanciones;
+
+  connection.query(
+    `insert into jugadores(
+      nombre,
+      nacionalidad,
+      id_entrenadores,
+      sejuego,
+      nombre_torneos,
+      edad,
+      sexo,
+      id_arbitros,
+      id_equipos,
+      id_torneos,
+      id_sanciones) 
+  values (?)`, [[nombre,nacionalidad,id_entrenadores,sejuego,nombre_torneos,edad,sexo,id_arbitros,id_equipos,id_torneos,id_sanciones]],
+    (error) => {
+      console.log(error);
+      console.log(data.method);
+      res.send("Ok");
+    }
+  );
+});
+
+//actualizando juadores
+app.put("/jugadores/:id", function (req, res) {
+  const id = req.id;
+  const nombre = req.nombre;
+  const nacionalidad = req.nacionalidad;
+  const sejuego = req.sejuego;
+  const nombre_torneos = req.nombre_torneos;
+  const edad = req.edad;
+  const sexo = req.sexo;
+  connection.query(
+    `update jugadores SET nombre=?,nacionalidad=?, sejuego= ?, nombre_torneos=?,edad =?,sexo=? where id=?;`,
+    [nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo, id],
+
+    () => {
+      console.log(req.method);
+      console.log(id);
+
+      res.send("Ok");
+    }
+  );
+});
+
+//eliminando un jugador
+app.delete("/jugadores/:id", function (req, res) {
+  const id = req.id;
+
+  connection.query(` delete from jugadores where id `, () => {
     console.log(req.method);
     console.log(id);
-    console.log(partida);
-  
-    res.send("Ok")
-  })
-  
-  
-  //eliminando un producto
-  app.delete('/partidas/:id', function (req, res) {
-    const id = req.params
-    console.log(req.method);
-    console.log(id);
-    res.send("Ok")
-  })
-  
-  module.exports = app
-  
+    res.send("Ok");
+  });
+});
+
+module.exports = app;
