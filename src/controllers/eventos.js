@@ -4,7 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  arbitros", function (err, results) {
+  connection.query("SELECT * FROM  eventos", function (err, results) {
     res.send(results);
   });
 }
@@ -13,17 +13,14 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
-  const id_sanciones = data.id_sanciones;
 
   connection.query(
-    `insert into arbitros(
-        nombre,
-        id_sanciones) 
+    `insert into eventos(
+        nombre) 
     values (?)`,
     [
       [
         nombre,
-        id_sanciones,
       ],
     ],
     (error,results) => {
@@ -37,10 +34,10 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
- const  id_sanciones= req.body.id_sanciones;
+
   connection.query(
-    `update arbitros SET nombre=? , id_sanciones=? where id=?;`,
-    [nombre,id_sanciones,id],
+    `update eventos SET nombre=?  where id=?;`,
+    [nombre,id],
 
     (error,results) => {
       res.send(results);
@@ -54,7 +51,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from arbitros where id=${id}`, 
+  connection.query(` delete from eventos where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -62,12 +59,9 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.eventosController = {
   index,
   store,
   update,
   destroy,
 };
-
-
-// 

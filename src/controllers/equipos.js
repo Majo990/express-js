@@ -4,7 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  arbitros", function (err, results) {
+  connection.query("SELECT * FROM  equipos", function (err, results) {
     res.send(results);
   });
 }
@@ -13,17 +13,23 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
-  const id_sanciones = data.id_sanciones;
+  const fecha = data.fecha;
+  const id_jugadores= data.id_jugadores;
+  const id_arbitros = data.id_arbitros;
 
   connection.query(
     `insert into arbitros(
         nombre,
-        id_sanciones) 
+        fecha,
+        id_jugadores,
+        id_arbitros) 
     values (?)`,
     [
       [
         nombre,
-        id_sanciones,
+        fecha,
+        id_jugadores,
+        id_arbitros,
       ],
     ],
     (error,results) => {
@@ -37,10 +43,13 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
- const  id_sanciones= req.body.id_sanciones;
+ const  fecha= req.body.fecha;
+ const id_jugadores=req.body.id_jugadores;
+ const id_entrenadores=req.body.id_entrenadores;
+
   connection.query(
-    `update arbitros SET nombre=? , id_sanciones=? where id=?;`,
-    [nombre,id_sanciones,id],
+    `update equipos SET nombre=? , fecha=?, id_jugadores=?,id_entrenadores=?  where id=?;`,
+    [nombre,fecha,id_jugadores,id_entrenadores,id],
 
     (error,results) => {
       res.send(results);
@@ -54,7 +63,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from arbitros where id=${id}`, 
+  connection.query(` delete from equipos where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -62,12 +71,10 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.equiposController = {
   index,
   store,
   update,
   destroy,
 };
 
-
-// 

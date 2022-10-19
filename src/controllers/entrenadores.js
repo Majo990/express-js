@@ -4,7 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  arbitros", function (err, results) {
+  connection.query("SELECT * FROM  entrenadores", function (err, results) {
     res.send(results);
   });
 }
@@ -13,17 +13,17 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
-  const id_sanciones = data.id_sanciones;
+  const id_jugadores = data.id_jugadores;
 
   connection.query(
-    `insert into arbitros(
+    `insert into entrenadores(
         nombre,
-        id_sanciones) 
+        id_jugadores) 
     values (?)`,
     [
       [
         nombre,
-        id_sanciones,
+        id_jugadores,
       ],
     ],
     (error,results) => {
@@ -37,10 +37,11 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
- const  id_sanciones= req.body.id_sanciones;
+ const  id_jugadores= req.body.id_jugadores;
+
   connection.query(
-    `update arbitros SET nombre=? , id_sanciones=? where id=?;`,
-    [nombre,id_sanciones,id],
+    `update entrenadores SET nombre=? , id_jugadores=? where id=?;`,
+    [nombre,id_jugadores,id],
 
     (error,results) => {
       res.send(results);
@@ -54,7 +55,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from arbitros where id=${id}`, 
+  connection.query(` delete from entrenadores where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -62,12 +63,10 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.entrenadoresController = {
   index,
   store,
   update,
   destroy,
 };
 
-
-// 

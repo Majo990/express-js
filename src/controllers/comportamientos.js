@@ -1,10 +1,10 @@
-
+//mal
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  arbitros", function (err, results) {
+  connection.query("SELECT * FROM  comportamientos", function (err, results) {
     res.send(results);
   });
 }
@@ -12,18 +12,21 @@ function index(req, res) {
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const nombre = data.nombre;
-  const id_sanciones = data.id_sanciones;
+  const descripcion = data.descripcion;
+  const id_jugadores = data.id_jugadores;
+  const id_arbitros= data.id_arbitros;
 
   connection.query(
-    `insert into arbitros(
-        nombre,
-        id_sanciones) 
+    `insert into comportamientos(
+        descripcion,
+        id_jugadores,
+        id_arbitros) 
     values (?)`,
     [
       [
-        nombre,
-        id_sanciones,
+        descripcion,
+        id_jugadores,
+        id_arbitros,
       ],
     ],
     (error,results) => {
@@ -36,11 +39,11 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const nombre = req.body.nombre;
- const  id_sanciones= req.body.id_sanciones;
+  const descripcion = req.body.descripcion;
+
   connection.query(
-    `update arbitros SET nombre=? , id_sanciones=? where id=?;`,
-    [nombre,id_sanciones,id],
+    `update comportamientos SET descripcion=?   where id=?;`,
+    [descripcion,id],
 
     (error,results) => {
       res.send(results);
@@ -54,7 +57,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from arbitros where id=${id}`, 
+  connection.query(` delete from comportamientos where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -62,12 +65,10 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.comportamientosController = {
   index,
   store,
   update,
   destroy,
 };
 
-
-// 
