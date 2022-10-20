@@ -1,10 +1,9 @@
-
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  jueces", function (err, results) {
+  connection.query("SELECT * FROM premios", function (err, results) {
     res.send(results);
   });
 }
@@ -13,14 +12,20 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
+  const tipo = data.tipo;
+  const stock = data.stock;
 
   connection.query(
-    `insert into jueces(
-        nombre) 
+    `insert into premios(
+        nombre,
+        tipo,
+        stock) 
     values (?)`,
     [
       [
         nombre,
+        tipo,
+        stock,
       ],
     ],
     (error,results) => {
@@ -34,9 +39,11 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
+  const tipo= req.body.tipo;
+ const  stock= req.body.stock;
   connection.query(
-    `update jueces SET nombre=? where id=?;`,
-    [nombre,id],
+    `update premios SET nombre=? ,tipo=?, stock=? where id=?;`,
+    [nombre,tipo,stock,id],
 
     (error,results) => {
       res.send(results);
@@ -50,7 +57,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from jueces where id=${id}`, 
+  connection.query(` delete from premios where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -58,9 +65,12 @@ function destroy(req, res) {
   });
 }
 
-module.exports.juecesController = {
+module.exports.premiosController = {
   index,
   store,
   update,
   destroy,
 };
+
+
+// 

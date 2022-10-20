@@ -56,8 +56,8 @@ function update(req, res) {
   const fecha_hora = req.body.fecha_hora;
  const  puntaje= req.body.id_puntaje;
   connection.query(
-    `update historial_partidas SET fecha_hora=? , puntaje=? where id=?;`,
-    [fecha_hora,puntaje,id],
+    `update historial_partidas SET fecha_hora=?,id_rondas=?,puntaje=?,id_eventos=?,id_jueces=?,id_premios where id=?;`,
+    [fecha_hora,id_rondas,puntaje,id_eventos,id_jueces,id_premios,id],
 
     (error,results) => {
       res.send(results);

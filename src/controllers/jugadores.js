@@ -64,15 +64,20 @@ function update(req, res) {
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
   const nacionalidad = req.body.nacionalidad;
+  const id_entrenadores=req.body.id_entrenadores;
   const sejuego=req.body.sejuego;
   const nombre_torneos=req.body.nombre_torneos;
   const edad = req.edad;
   const sexo = req.sexo;
+  const id_abitros= req.id_abitros;
+  const id_equipos=req.id_equipos;
+  const id_torneos=req.id_torneos;
+  const id_sanciones=req.id_sanciones;
 
 
   connection.query(
     `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,nombre_torneos=?,edad=?,sexo=? where id=?;`,
-    [nombre, nacionalidad, sejuego,nombre_torneos,edad,sexo,id],
+    [nombre, nacionalidad,id_entrenadores, sejuego,nombre_torneos,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,id],
 
     () => {
       res.send("Ok");

@@ -4,7 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  jueces", function (err, results) {
+  connection.query("SELECT * FROM  permisos", function (err, results) {
     res.send(results);
   });
 }
@@ -12,15 +12,21 @@ function index(req, res) {
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const nombre = data.nombre;
+  const id_usuarios=data.id_usuarios;
+  const descripcion = data.descripcion;
+  const id_roles = data.id_roles;
 
   connection.query(
-    `insert into jueces(
-        nombre) 
+    `insert into permisos(
+        id_usuarios,
+        descripcion,
+        id_roles) 
     values (?)`,
     [
       [
-        nombre,
+        id_usuarios,
+        descripcion,
+        id_roles,
       ],
     ],
     (error,results) => {
@@ -33,10 +39,12 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const nombre = req.body.nombre;
+  const id_usuarios=req.id_usuarios;
+  const descripcion= req.body.descripcion;
+ const  id_roles= req.body.id_roles;
   connection.query(
-    `update jueces SET nombre=? where id=?;`,
-    [nombre,id],
+    `update permisos SET id_usuarios=?,descripcion=?,id_roles=? where id=?;`,
+    [id_usuarios,descripcion,id_roles,id],
 
     (error,results) => {
       res.send(results);
@@ -50,7 +58,7 @@ function destroy(req, res) {
   
   const id = req.params.id;
 
-  connection.query(` delete from jueces where id=${id}`, 
+  connection.query(` delete from permisos where id=${id}`, 
   (
     error,results) => {
       res.send(results);
@@ -58,7 +66,7 @@ function destroy(req, res) {
   });
 }
 
-module.exports.juecesController = {
+module.exports.permisosController = {
   index,
   store,
   update,
