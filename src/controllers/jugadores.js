@@ -2,8 +2,20 @@ const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
-  // with placeholder
-  connection.query("SELECT * FROM  jugadores", function (err, results) {
+  // with placeholder 
+  connection.query(`
+select j.*,e.nombre as nombre_entrenador, e2.nombre as nombre_equipos,t.nombre as nombre_torneos,a.nombre  as nombre_arbitros,s.nombre as nombre_sanciones from jugadores j 
+left outer join entrenadores e 
+on e.id =j.id_entrenadores
+left outer join arbitros a 
+on a.id=j.id_arbitros 
+left outer join equipos e2 
+on e2.id = j.id_equipos 
+left outer join sanciones s 
+on s.id = j.id_sanciones 
+left outer join torneos t 
+on t.id = j.id_torneos ; `,
+  function (err, results) {
     res.send(results);
   });
 }
@@ -15,7 +27,6 @@ function store(req, res) {
   const nacionalidad = data.nacionalidad;
   const id_entrenadores = data.id_entrenadores;
   const sejuego = data.sejuego;
-  const nombre_torneos = data.nombre_torneos;
   const edad = data.edad;
   const sexo = data.sexo;
   const id_arbitros = data.id_arbitros;
@@ -29,7 +40,6 @@ function store(req, res) {
         nacionalidad,
         id_entrenadores,
         sejuego,
-        nombre_torneos,
         edad,
         sexo,
         id_arbitros,
@@ -43,7 +53,6 @@ function store(req, res) {
         nacionalidad,
         id_entrenadores,
         sejuego,
-        nombre_torneos,
         edad,
         sexo,
         id_arbitros,
@@ -66,7 +75,6 @@ function update(req, res) {
   const nacionalidad = req.body.nacionalidad;
   const id_entrenadores=req.body.id_entrenadores;
   const sejuego=req.body.sejuego;
-  const nombre_torneos=req.body.nombre_torneos;
   const edad = req.edad;
   const sexo = req.sexo;
   const id_abitros= req.id_abitros;
@@ -76,8 +84,8 @@ function update(req, res) {
 
 
   connection.query(
-    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,nombre_torneos=?,edad=?,sexo=? where id=?;`,
-    [nombre, nacionalidad,id_entrenadores, sejuego,nombre_torneos,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,id],
+    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=? where id=?;`,
+    [nombre, nacionalidad,id_entrenadores, sejuego,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,id],
 
     () => {
       res.send("Ok");

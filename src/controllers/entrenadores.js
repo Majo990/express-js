@@ -4,7 +4,9 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  entrenadores", function (err, results) {
+  connection.query(` select  e.*,j.nombre as nombre_jugadores from entrenadores e 
+  left outer join  jugadores j 
+  on  j.id=id_jugadores`, function (err, results) {
     res.send(results);
   });
 }
