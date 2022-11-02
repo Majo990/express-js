@@ -4,7 +4,13 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  comportamientos", function (err, results) {
+  connection.query(`
+  select  c.*,j. nombre as nombre_jugadores,a.nombre  as nombre_arbitros from comportamientos c
+  left outer join jugadores j
+  on j.id=c.id_jugadores
+ left outer join  arbitros a
+ on  a.id=c.id_arbitros
+  `, function (err, results) {
     res.send(results);
   });
 }
@@ -20,7 +26,7 @@ function store(req, res) {
     `insert into comportamientos(
         descripcion,
         id_jugadores,
-        id_arbitros) 
+        id_arbitros)
     values (?)`,
     [
       [
@@ -54,14 +60,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from comportamientos where id=${id}`, 
+  connection.query(` delete from comportamientos where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 

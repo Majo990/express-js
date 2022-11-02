@@ -4,7 +4,10 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  perfiles", function (err, results) {
+  connection.query(`
+  select   p.*,u.usuarios  from perfiles p
+  left outer join  usuarios u
+  on  u.id = p.id_usuarios `, function (err, results) {
     res.send(results);
   });
 }
@@ -40,7 +43,7 @@ function store(req, res) {
         direccion,
         celular,
         codigo_postal,
-        id_usuarios) 
+        id_usuarios)
     values (?)`,
     [
       [
@@ -84,7 +87,7 @@ function update(req, res) {
   const id_usuarios = req.body.id_usuarios;
 
 
-  
+
   connection.query(
     `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,pais=?,ciudad=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=? where id=?;`,
     [nombre,apellido,edad,sexo,pais,ciudad,dni,nacionalidad,email,direccion,celular,codigo_postal,id_usuarios,id],
@@ -98,14 +101,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from perfiles where id=${id}`, 
+  connection.query(` delete from perfiles where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 

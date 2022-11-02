@@ -15,7 +15,10 @@ function one(req) {
   // with placeholder
   return new Promise((resolve, reject) => {
     connection.query(
-      `SELECT * FROM usuarios WHERE usuarios='${usuario}'`,
+      ` select u.*,r.descripcion as descripcion_roles from usuarios u
+      left outer join roles r
+      on r.id=u.id_roles 
+      '${usuario}'`,
       function (err, results) {
         if (err) {
           reject(err);
@@ -47,7 +50,7 @@ function store(req, res) {
     `insert into usuarios(
         usuarios,
         contraseña,
-        id_roles) 
+        id_roles)
     values (?)`,
     [[usuarios, encriptar(contraseña), id_roles]],
     (error) => {

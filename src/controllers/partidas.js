@@ -4,7 +4,15 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("SELECT * FROM  partidas", function (err, results) {
+  connection.query(`
+
+  select p.*,j.nombre as nombre_jugadores, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
+  left outer join jugadores j
+  on  j.id=p.id_jugadores
+  left outer join torneos t
+  on t.id=p.id_torneos
+  left outer  join rondas r
+  on r.id = p.id_rondas`, function (err, results) {
     res.send(results);
   });
 }
@@ -33,7 +41,7 @@ function store(req, res) {
         tiempo_inicio,
         tiempo_duracion,
         tiempo_fin,
-        id_rondas) 
+        id_rondas)
     values (?)`,
     [
       [
@@ -81,14 +89,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from partidas where id=${id}`, 
+  connection.query(` delete from partidas where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 

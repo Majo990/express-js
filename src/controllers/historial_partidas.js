@@ -1,23 +1,24 @@
 
 //entrenadores , usuer,arbitro,comportamineot,ya hice
-//jugadores,equipos,eventos , 
+//jugadores,equipos,eventos ,
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(` 
-  select hp.*,j.nombre as nombre_jugadores , r.nro as nro , e.nombre as nombre_eventos , j2.nombre as nombre_jueces, p.nombre as nombre_premios from historial_partidas hp 
-  left outer join jugadores j 
-  on  j.id=id_jugadores 
-  left outer join rondas r 
-  on r.id=id_rondas 
- left outer join eventos e 
- on e.id=id_eventos 
- left outer join jueces j2 
- on j2.id=id_jueces 
- left outer join premios p 
- on  p.id =id_premios `, function (err, results) {
+  connection.query(`
+   select hp.*,j.nombre as nombre_jugadores , r.nro as nro , e.nombre as nombre_eventos , j2.nombre as nombre_jueces, p.nombre as nombre_premios from historial_partidas hp 
+ left outer join jugadores j 
+ on  j.id=id_jugadores 
+ left outer join rondas r 
+ on r.id=id_rondas 
+left outer join eventos e 
+on e.id=id_eventos 
+left outer join jueces j2 
+on j2.id=id_jueces 
+left outer join premios p 
+on  p.id =id_premios 
+  `, function (err, results) {
     res.send(results);
   });
 }
@@ -41,7 +42,7 @@ function store(req, res) {
         puntaje,
         id_eventos,
         id_jueces,
-        id_premios) 
+        id_premios)
     values (?)`,
     [
       [
@@ -79,14 +80,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from historial_partidas where id=${id}`, 
+  connection.query(` delete from historial_partidas where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 

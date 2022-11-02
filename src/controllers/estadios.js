@@ -6,9 +6,10 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(` select e.*,j.nombre as nombre_jugadores from estadios e 
-  left outer join  jugadores j 
-  on j.id =id_jugadores `, function (err, results) {
+  connection.query(` select e.*,j.nombre as nombre_jugadores from estadios e
+  left outer join  jugadores j
+  on j.id =id_jugadores
+   `, function (err, results) {
     res.send(results);
   });
 }
@@ -26,13 +27,15 @@ function store(req, res) {
         nombre,
         pais,
         ciudad,
-        id_jugadores) 
+        id_jugadores
+        cancha)
     values (?)`,
     [
       [
         nombre,
         pais,ciudad,
         id_jugadores,
+        cancha,
       ],
     ],
     (error,results) => {
@@ -51,8 +54,8 @@ function update(req, res) {
   const id_jugadores=re.body.id_jugadores;
 
   connection.query(
-    `update estadios SET nombre=? , pais=?, ciudad=? , id_jugadores=? where id=?;`,
-    [nombre,pais,ciudad,id_jugadores,id],
+    `update estadios SET nombre=? , pais=?, ciudad=? , id_jugadores=? cancha=? where id=?;`,
+    [nombre,pais,ciudad,id_jugadores,cancha,id],
 
     (error,results) => {
       res.send(results);
@@ -63,14 +66,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from estadios where id=${id}`, 
+  connection.query(` delete from estadios where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 
