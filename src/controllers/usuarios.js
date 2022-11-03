@@ -15,9 +15,7 @@ function one(req) {
   // with placeholder
   return new Promise((resolve, reject) => {
     connection.query(
-      ` select u.*,r.descripcion as descripcion_roles from usuarios u
-      left outer join roles r
-      on r.id=u.id_roles 
+      `select * from usuarios where usuarios =
       '${usuario}'`,
       function (err, results) {
         if (err) {
@@ -32,7 +30,9 @@ function one(req) {
 function index(req, res) {
   // with placeholder
   connection.query(
-    "SELECT id,usuarios,id_roles FROM usuarios",
+    ` select u.*,r.descripcion as descripcion_roles from usuarios u
+    left outer join roles r
+    on r.id=u.id_roles`,
     function (err, results) {
       res.send(results);
     }
