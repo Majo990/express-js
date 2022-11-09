@@ -1,16 +1,10 @@
 
-
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
-  select pj.*, p.nombre as nombre_partidas, j.nombre as nombre_jugadores  from partidas_jugadores pj
-  left outer join partidas p
-  on p.id= pj.id_partidas
-  left outer join jugadores j
-  on j.id = pj.id_jugadores`, function (err, results) {
+  connection.query(`SELECT * FROM  ciudades`, function (err, results) {
     res.send(results);
   });
 }
@@ -18,18 +12,15 @@ function index(req, res) {
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const id_partidas=data.id_partidas;
-  const id_jugadores = data.id_jugadores;
+  const nombre = data.nombre;
 
   connection.query(
-    `insert into partidas_jugadores(
-        id_partidas,
-        id_jugadores)
+    `insert into arbitros(
+        nombre)
     values (?)`,
     [
       [
-        id_partidas,
-        id_jugadores,
+        nombre,
       ],
     ],
     (error,results) => {
@@ -42,13 +33,11 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
+const nombre = req.body.nombre;
 
- const  id_partidas= req.body.id_partidas;
- const id_jugadores=req.body.id_jugadores;
   connection.query(
-    `update partidas_jugadores SET id_partidas=?,id_jugadores=? where id=?;`,
-    [id_partidas,id_jugadores,id],
-
+    `update arbitros SET nombre=? where id=?;`,
+    [nombre,id],
     (error,results) => {
       res.send(results);
       console.log(error)
@@ -61,7 +50,7 @@ function destroy(req, res) {
 
   const id = req.params.id;
 
-  connection.query(` delete from partidas_jugadores where id=${id}`,
+  connection.query(`delete from arbitros where id=${id}`,
   (
     error,results) => {
       res.send(results);
@@ -69,7 +58,7 @@ function destroy(req, res) {
   });
 }
 
-module.exports.partidas_jugadoresController = {
+module.exports.arbitrosController = {
   index,
   store,
   update,

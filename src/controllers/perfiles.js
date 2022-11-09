@@ -5,9 +5,14 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(`
-  select   p.*,u.usuarios  from perfiles p
+
+  select   p.*,u.usuarios,p2. nombre as nombre_paises, c.nombre as nombre_ciudades from perfiles p
   left outer join  usuarios u
-  on  u.id = p.id_usuarios `, function (err, results) {
+  on  u.id = p.id_usuarios
+  left outer join paises p2
+  on p2.id = p.id_paises
+  left outer join ciudades c
+  on c.id= p.id_ciudades `, function (err, results) {
     res.send(results);
   });
 }
@@ -28,6 +33,8 @@ function store(req, res) {
   const celular = data.celular;
   const codigo_postal = data.codigo_postal;
   const id_usuarios = data.id_usuarios;
+  const id_paises=data.id_paises;
+  const id_ciudades=data.id_ciudades;
 
   connection.query(
     `insert into perfiles(
@@ -43,7 +50,9 @@ function store(req, res) {
         direccion,
         celular,
         codigo_postal,
-        id_usuarios)
+        id_usuarios,
+        id_paises,
+        id_ciudades)
     values (?)`,
     [
       [
@@ -60,6 +69,8 @@ function store(req, res) {
         celular,
         codigo_postal,
         id_usuarios,
+        id_paises,
+        id_ciudades,
       ],
     ],
     (error,results) => {
@@ -85,12 +96,14 @@ function update(req, res) {
   const celular = req.body.celular;
   const codigo_postal = req.body.codigo_postal;
   const id_usuarios = req.body.id_usuarios;
+  const id_paises=req.id_paises;
+  const id_ciudades=req.id_ciudades;
 
 
 
   connection.query(
-    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,pais=?,ciudad=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=? where id=?;`,
-    [nombre,apellido,edad,sexo,pais,ciudad,dni,nacionalidad,email,direccion,celular,codigo_postal,id_usuarios,id],
+    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,pais=?,ciudad=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=?,id_paises=?,id_ciudades=? where id=?;`,
+    [nombre,apellido,edad,sexo,pais,ciudad,dni,nacionalidad,email,direccion,celular,codigo_postal,id_usuarios,id_paises,id_ciudades,id],
 
     (error,results) => {
       res.send(results);

@@ -16,26 +16,26 @@ function store(req, res) {
   const data = req.body;
   const fecha = data.fecha;
   const id_estadios = data.id_estadios;
-  const pais=data.pais;
   const nombre=data.nombre;
-  const ciudad=data.ciudad;
+  const id_paises=data.id_paises;
+  const id_ciudades=data.id_ciudades;
 
   connection.query(
     `insert into torneos(
 
         fecha,
         id_estadios,
-        pais,
         nombre,
-        ciudad)
+        id_paises,
+        id_ciudades)
     values (?)`,
     [
       [
         fecha,
         id_estadios,
-        pais,
         nombre,
-        ciudad,
+        id_paises,
+        id_ciudades,
       ],
     ],
     (error,results) => {
@@ -50,12 +50,12 @@ function update(req, res) {
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
     const fecha=req.body.fecha;
     const id_estadios=req.body.id_estadios;
-    const pais=req.body.pais;
   const nombre = req.body.nombre;
- const  ciudad= req.body.ciudad;
+  const id_paises=req.body.id_paises;
+ const  id_ciudades= req.body.id_ciudades;
   connection.query(
-    `update torneos SET fecha=?,id_estadios=?,pais=?,nombre=?,ciudad=? where id=?;`,
-    [fecha,id_estadios,pais,nombre,ciudad,id],
+    `update torneos SET fecha=?,id_estadios=?,nombre=?,id_paises,id_ciudades where id=?;`,
+    [fecha,id_estadios,nombre,id_paises,id_ciudades,id],
 
     (error,results) => {
       res.send(results);

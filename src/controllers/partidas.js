@@ -12,7 +12,9 @@ function index(req, res) {
   left outer join torneos t
   on t.id=p.id_torneos
   left outer  join rondas r
-  on r.id = p.id_rondas`, function (err, results) {
+  on r.id = p.id_rondas`
+
+  , function (err, results) {
     res.send(results);
   });
 }
@@ -29,7 +31,7 @@ function store(req, res) {
   const tiempo_duracion=data.tiempo_duracion;
   const tiempo_fin=data.tiempo_fin;
   const id_rondas=data.id_rondas;
-
+ /*const id_historial_partidas=data.id_historial_partidas;*/
 
   connection.query(
     `insert into partidas(
@@ -54,6 +56,7 @@ function store(req, res) {
         tiempo_duracion,
         tiempo_fin,
         id_rondas,
+       /* id_historial_partidas,*/
       ],
     ],
     (error,results) => {
@@ -75,6 +78,7 @@ function update(req, res) {
   const tiempo_duracion=req.body.tiempo_duracion;
   const tiempo_fin=req.body.tiempo_fin;
  const  id_rondas= req.body.id_rondas;
+ /*const id_historial_partidas=req.body.id_historial_partidas;*/
 
   connection.query(
     `update partidas SET nombre=?,descripcion=?,id_jugadores=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=? where id=?;`,

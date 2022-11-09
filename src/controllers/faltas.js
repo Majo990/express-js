@@ -5,15 +5,15 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(`
-  select  f.*,j.nombre as nombre_jugadores , a.nombre as nombre_arbitros,f.fecha_hora as fecha_hora , p.nombre as nombre_partidas  from faltas f
- left outer join jugadores j
- on j.id =id_jugadores
- left outer join arbitros a
- on  a.id =f.id_arbitros
- left outer join historial_partidas hp
- on hp.id = id_historial_partidas
- left outer join  partidas p
- on p.id =id_partidas
+  select f.*,j.nombre as nombre_jugadores, a.nombre as nombre_arbitros , p.nombre as nombre_partidas  from faltas f
+left outer join jugadores j
+on j.id=f.id_jugadores
+left outer join arbitros a
+on a.id=f.id_arbitros
+left outer join historial_partidas hp
+on hp.id=f.id_historial_partidas
+left outer join partidas p
+on p.id=f.id_partidas
  `, function (err, results) {
     res.send(results);
   });
@@ -65,8 +65,8 @@ function update(req, res) {
  const id_historial_partidas= req.body.id_historial_partidas;
  const id_partidas=req.body.id_partidas;
   connection.query(
-    `update faltas SET nro=? , fecha_hora=? ,id_jugadores=?, id_arbitros=?, id_historial_partidas, id_partidas  where id=?;`,
-    [nro,fecha_hora,id_jugadores, id_abitros,id_historial_partidas, id_partidas,id],
+    `update faltas SET nro=? ,fecha_hora=?,id_jugadores=?,id_arbitros=?,id_historial_partidas,id_partidas  where id=?;`,
+    [nro,fecha_hora,id_jugadores,id_abitros,id_historial_partidas,id_partidas,id],
 
     (error,results) => {
       res.send(results);

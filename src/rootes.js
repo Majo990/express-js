@@ -21,6 +21,11 @@ const {sancionesController}=require("./controllers/sanciones");
 const {torneosController}=require("./controllers/torneos");
 const {premiosController}=require("./controllers/premios");
 
+const {ciudadesController}=require("./controllers/ciudades");
+const {paisesController}=require("./controllers/paises");
+const {provinciaController}=require("./controllers/provincia");
+
+
 
 const controllers = require("./controllers");
 
@@ -102,7 +107,7 @@ app.delete("/perfiles/:id", perfilesController.destroy);
 
 
 
-// crud de arbitros 
+// crud de arbitros
 
 //select arbit
 app.get("/arbitros", arbitrosController.index);
@@ -149,7 +154,7 @@ app.delete("/entrenadores/:id", entrenadoresController.destroy);
 
 
 
-// crud equipos 
+// crud equipos
 
 app.get("/equipos", equiposController.index);
 
@@ -164,7 +169,7 @@ app.delete("/equipos/:id", equiposController.destroy);
 
 
 
-//crud estadios 
+//crud estadios
 
 
 app.get("/estadios", estadiosController.index);
@@ -330,7 +335,48 @@ app.delete("/premios/:id", premiosController.destroy);
 
 
 
+//crud de paises
 
+
+app.get("/paises", paisesController.index);
+
+//creando un jugadores
+app.post("/paises",paisesController.store);
+
+//actualizando juadores
+app.put("/paises/:id", paisesController.update);
+
+//eliminando un jugador
+app.delete("/paises/:id", paisesController.destroy);
+
+
+//crud de ciudades
+
+
+app.get("/ciudades",ciudadesController.index);
+
+//creando un jugadores
+app.post("/ciudades",ciudadesController.store);
+
+//actualizando juadores
+app.put("/ciudades/:id",ciudadesController.update);
+
+//eliminando un jugador
+app.delete("/ciudades/:id",ciudadesController.destroy);
+
+//crud de provincia
+
+
+app.get("/provincia", provinciaController.index);
+
+//creando un jugadores
+app.post("/provincia",provinciaController.store);
+
+//actualizando juadores
+app.put("/provincia/:id", provinciaController.update);
+
+//eliminando un jugador
+app.delete("/provincia/:id", provinciaController.destroy);
 
 module.exports = app;
 
