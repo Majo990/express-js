@@ -1,5 +1,4 @@
-
-/*const { connection } = require("../db");
+const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
@@ -13,7 +12,6 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
-
 
   connection.query(
     `insert into arbitros(
@@ -50,7 +48,7 @@ function destroy(req, res) {
 
   const id = req.params.id;
 
-  connection.query(` delete from arbitros where id=${id}`,
+  connection.query(`delete from arbitros where id=${id}`,
   (
     error,results) => {
       res.send(results);
@@ -64,4 +62,4 @@ module.exports.arbitrosController = {
   update,
   destroy,
 };
-*/
+
