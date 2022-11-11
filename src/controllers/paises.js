@@ -1,11 +1,14 @@
 const { connection } = require("../db");
+const axios = require("axios");
 
 //select jugadores
-function index(req, res) {
-  // with placeholder
-  connection.query(`SELECT * FROM  paises `, function (err, results) {
-    res.send(results);
+async function index(req, res) {
+  const instance = axios.create({
+    baseURL: "https://countriesnow.space/api/v0.1/countries",
   });
+
+  const r = await instance.get("/");
+  res.send(r.data.data);
 }
 
 //creando un jugadores
@@ -17,12 +20,8 @@ function store(req, res) {
     `insert into arbitros(
         nombre)
     values (?)`,
-    [
-      [
-        nombre,
-      ],
-    ],
-    (error,results) => {
+    [[nombre]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -32,34 +31,29 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-const nombre = req.body.nombre;
-connection.query(
+  const nombre = req.body.nombre;
+  connection.query(
     `update arbitros SET nombre=? where id=?;`,
-    [nombre,id],
-    (error,results) => {
+    [nombre, id],
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(`delete from arbitros where id=${id}`,
-  (
-    error,results) => {
-      res.send(results);
-
+  connection.query(`delete from arbitros where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.paisesController = {
   index,
   store,
   update,
   destroy,
 };
-

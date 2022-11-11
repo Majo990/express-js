@@ -46,7 +46,7 @@ function store(req, res) {
   const id_paises=data.id_paises;
   const id_ciudades=data.id_ciudades;
   const posicion=data.posicion;
-  const reside_paises=data.reside_paises;
+
 
   connection.query(
     `insert into jugadores(
@@ -64,8 +64,7 @@ function store(req, res) {
         peso,
         id_paises,
         id_ciudades,
-        posicion,
-        reside_paises)
+        posicion)
     values (?)`,
     [
       [
@@ -84,7 +83,7 @@ function store(req, res) {
         id_paises,
         id_ciudades,
         posicion,
-        reside_paises,
+
       ],
     ],
     (error) => {
@@ -112,13 +111,13 @@ function update(req, res) {
   const id_paises=req.id_paises;
   const id_ciudades=req.id_ciudades;
   const posicion=req.posicion;
-  const reside_paises=req.posicion;
+
 
 
 
   connection.query(
     `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,id_paises=?,id_ciudades=?,posicion=?,reside_paises=? where id=?;`,
-    [nombre, nacionalidad,id_entrenadores, sejuego,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,altura,peso,id_paises,id_ciudades,posicion,reside_paises,id],
+    [nombre, nacionalidad,id_entrenadores, sejuego,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,altura,peso,id_paises,id_ciudades,posicion,id],
 
 
     () => {

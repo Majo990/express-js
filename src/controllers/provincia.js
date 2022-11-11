@@ -58,7 +58,7 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.provinciaController = {
   index,
   store,
   update,

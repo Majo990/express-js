@@ -7,15 +7,13 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(`
-  select e.*,j.nombre as nombre_jugadore,p.nombre as nombre_paises, c.nombre as nombre_ciudades, p2.nombre as nombre_provincia from estadios e
+  select e.*,j.nombre as nombre_jugadore,p.nombre as nombre_paises, c.nombre as nombre_ciudades from estadios e
   left outer join jugadores j
   on j.id=e.id_jugadores
   left outer join paises p
   on p.id =e.id_paises
   left outer join ciudades c
   on c.id =e.id_ciudades
-  left outer join provincia p2
-  on p2.id=e.id_provincia,
    `, function (err, results) {
     res.send(results);
   });
@@ -35,7 +33,7 @@ function store(req, res) {
   const direccion=data.direccion;
   const id_paises=data.id_paises;
   const id_ciudades=data.id_ciudades;
-  const id_provincia=data.id_provincia;
+
 
   connection.query(
     `insert into estadios(
@@ -49,8 +47,7 @@ function store(req, res) {
         ubigeo,
         direccion,
         id_paises,
-        id_ciudades,
-        id_provincia)
+        id_ciudades)
     values (?)`,
     [
       [
@@ -65,7 +62,7 @@ function store(req, res) {
         direccion,
         id_paises,
         id_ciudades,
-        id_provincia,
+
       ],
     ],
     (error,results) => {
@@ -89,12 +86,12 @@ function update(req, res) {
   const direccion=req.body.direccion;
   const id_paises= req.body.paises;
   const id_ciudades=req.body.ciudades;
-  const id_provincia=req.body.id_provincia;
+
 
 
   connection.query(
-    `update estadios SET nombre=?,id_jugadores=?,cancha=?,departamento=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,id_paises=?,id_ciudades=?,id_provincia=? where id=?;`,
-    [nombre,id_jugadores,cancha,departamento,cesped,administrador,propietario,ubigeo,direccion,id_paises,id_ciudades,id_provincia,id],
+    `update estadios SET nombre=?,id_jugadores=?,cancha=?,departamento=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,id_paises=?,id_ciudades=? where id=?;`,
+    [nombre,id_jugadores,cancha,departamento,cesped,administrador,propietario,ubigeo,direccion,id_paises,id_ciudades,id],
 
  console.log(update),
     (error,results) => {

@@ -58,7 +58,7 @@ function destroy(req, res) {
   });
 }
 
-module.exports.arbitrosController = {
+module.exports.ciudadesController = {
   index,
   store,
   update,

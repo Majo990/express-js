@@ -337,7 +337,7 @@ app.delete("/premios/:id", premiosController.destroy);
 
 //crud de paises
 
-/*
+
 app.get("/paises", paisesController.index);
 
 //creando un jugadores
@@ -377,7 +377,7 @@ app.put("/provincia/:id", provinciaController.update);
 
 //eliminando un jugador
 app.delete("/provincia/:id", provinciaController.destroy);
-*/
+
 module.exports = app;
 
 
