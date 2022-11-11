@@ -4,12 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
-  select a.*,p.nombre as nombre_paises,c.nombre  as nombre_ciudades from arbitros a
-  left outer join paises p
-  on p.id=a.id_paises
-  left outer join ciudades c
-  on c.id=a.id_ciudades  `, function (err, results) {
+  connection.query(`select * from arbitros`, function (err, results) {
     res.send(results);
   });
 }
