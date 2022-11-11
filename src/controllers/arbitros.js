@@ -24,8 +24,8 @@ function store(req, res) {
   const altura=data.altura;
  const peso=data.peso;
  const fecha_nacimiento=data.fecha_nacimiento;
- const id_paises=data.id_paises;
- const id_ciudades=data.id_ciudades;
+ const nombre_paises=data.nombre_paises;
+const nombre_ciudades=data.nombre_ciudades;
 
 
   connection.query(
@@ -37,8 +37,9 @@ function store(req, res) {
         altura,
         peso,
         fecha_nacimiento,
-        id_paises,
-        id_ciudades)
+        nombre_paises,
+        nombre_ciudades
+        )
     values (?)`,
     [
       [
@@ -49,8 +50,8 @@ function store(req, res) {
         altura,
         peso,
         fecha_nacimiento,
-        id_paises,
-        id_ciudades,
+  nombre_paises,
+  nombre_ciudades,
 
       ],
     ],
@@ -71,11 +72,12 @@ const nombre = req.body.nombre;
  const altura=req.body.altura;
  const peso=req.body.peso;
  const fecha_nacimiento=req.body.fecha_nacimiento;
- const id_paises=req.body.id_paises;
- const id_ciudades=req.body.id_ciudades;
+ const nombre_paises=req.body.nombre_paises;
+ const nombre_ciudades=req.body.nombre_ciudades;
+
   connection.query(
-    `update arbitros SET nombre=?,apellido=?,edad=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,id_paises=?,id_ciudades=? where id=?;`,
-    [nombre,apellido,edad,sexo,altura,peso,fecha_nacimiento,id_paises,id_ciudades,id],
+    `update arbitros SET nombre=?,apellido=?,edad=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,nombre_paises=?,nombre_ciudades=?where id=?;`,
+    [nombre,apellido,edad,sexo,altura,peso,fecha_nacimiento,nombre_paises,nombre_ciudades,id],
     (error,results) => {
       res.send(results);
       console.log(error)
