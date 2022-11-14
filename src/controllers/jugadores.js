@@ -4,10 +4,11 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
+  connection.query(
+    `
 
   select  j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
-  t.nombre as nombre_torneos,s.nombre as nombre_sanciones, p.nombre as nombre_paises, c.nombre as nombre_ciudades from jugadores j
+  t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
   left outer join entrenadores e
   on e.id=j.id_entrenadores
   left outer join arbitros a
@@ -18,14 +19,11 @@ function index(req, res) {
   on t.id=j.id_torneos
   left outer join sanciones s
   on s.id =j.id_sanciones
-  left outer join paises p
-  on p.id=j.id_paises
-  left outer join ciudades c
-  on c.id=j.id_ciudades
   `,
-  function (err, results) {
-    res.send(results);
-  });
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
 //creando un jugadores
@@ -41,12 +39,11 @@ function store(req, res) {
   const id_equipos = data.id_equipos;
   const id_torneos = data.id_torneos;
   const id_sanciones = data.id_sanciones;
-  const altura= data.altura;
-  const peso=data.peso;
-  const id_paises=data.id_paises;
-  const id_ciudades=data.id_ciudades;
-  const posicion=data.posicion;
-
+  const altura = data.altura;
+  const peso = data.peso;
+  const nombre_paises = data.nombre_paises;
+  const nombre_ciudades = data.nombre_ciudades;
+  const posicion = data.posicion;
 
   connection.query(
     `insert into jugadores(
@@ -62,8 +59,8 @@ function store(req, res) {
         id_sanciones,
         altura,
         peso,
-        id_paises,
-        id_ciudades,
+        nombre_paises,
+        nombre_ciudades,
         posicion)
     values (?)`,
     [
@@ -80,10 +77,9 @@ function store(req, res) {
         id_sanciones,
         altura,
         peso,
-        id_paises,
-        id_ciudades,
+        nombre_paises,
+        nombre_ciudades,
         posicion,
-
       ],
     ],
     (error) => {
@@ -98,27 +94,40 @@ function update(req, res) {
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
   const nacionalidad = req.body.nacionalidad;
-  const id_entrenadores=req.body.id_entrenadores;
-//  const sejuego=req.body.sejuego; puntaje
+  const id_entrenadores = req.body.id_entrenadores;
+  //  const sejuego=req.body.sejuego; puntaje
   const edad = req.edad;
   const sexo = req.sexo;
-  const id_abitros= req.id_abitros;
-  const id_equipos=req.id_equipos;
-  const id_torneos=req.id_torneos;
-  const id_sanciones=req.id_sanciones;
-  const altura =req.altura;
-  const peso=req.peso;
-  const id_paises=req.id_paises;
-  const id_ciudades=req.id_ciudades;
-  const posicion=req.posicion;
-
-
-
+  const id_abitros = req.id_abitros;
+  const id_equipos = req.id_equipos;
+  const id_torneos = req.id_torneos;
+  const id_sanciones = req.id_sanciones;
+  const altura = req.altura;
+  const peso = req.peso;
+  const nombre_paises = req.nombre_paises;
+  const nombre_ciudades = req.nombre_ciudades;
+  const posicion = req.posicion;
 
   connection.query(
-    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,id_paises=?,id_ciudades=?,posicion=?,reside_paises=? where id=?;`,
-    [nombre, nacionalidad,id_entrenadores, sejuego,edad,sexo,id_abitros,id_equipos,id_torneos,id_sanciones,altura,peso,id_paises,id_ciudades,posicion,id],
-
+    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=?,posicion=?,reside_paises=? where id=?;`,
+    [
+      nombre,
+      nacionalidad,
+      id_entrenadores,
+      sejuego,
+      edad,
+      sexo,
+      id_abitros,
+      id_equipos,
+      id_torneos,
+      id_sanciones,
+      altura,
+      peso,
+      nombre_paises,
+      nombre_ciudades,
+      posicion,
+      id,
+    ],
 
     () => {
       res.send("Ok");
@@ -128,7 +137,6 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
   connection.query(` delete from jugadores where id=${id}`, () => {

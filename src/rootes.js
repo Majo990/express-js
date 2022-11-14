@@ -23,7 +23,6 @@ const {premiosController}=require("./controllers/premios");
 
 const {ciudadesController}=require("./controllers/ciudades");
 const {paisesController}=require("./controllers/paises");
-const {provinciaController}=require("./controllers/provincia");
 
 
 
@@ -366,17 +365,6 @@ app.delete("/ciudades/:id",ciudadesController.destroy);
 
 //crud de provincia
 
-
-app.get("/provincia", provinciaController.index);
-
-//creando un jugadores
-app.post("/provincia",provinciaController.store);
-
-//actualizando juadores
-app.put("/provincia/:id", provinciaController.update);
-
-//eliminando un jugador
-app.delete("/provincia/:id", provinciaController.destroy);
 
 module.exports = app;
 

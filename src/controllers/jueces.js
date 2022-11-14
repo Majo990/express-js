@@ -4,11 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`select j.*,p.nombre as nombre_paises, c.nombre as nombre_ciudades  from jueces j
-  left outer join paises p
-  on p.id=j.id_paises
-   left outer join ciudades c
-  on c.id=j.id_ciudades `, function (err, results) {
+  connection.query("select * from jueces j ", function (err, results) {
     res.send(results);
   });
 }
@@ -21,8 +17,8 @@ function store(req, res) {
   const fecha_nacimiento= data.fecha_nacimiento;
   const edad=data.edad;
   const sexo=data.sexo;
-  const id_paises=data.id_paises;
-  const id_ciudades=data.id_ciudades;
+  const nombre_paises=data.nombre_paises;
+  const nombre_ciudades=data.nombre_ciudades;
 
   connection.query(
     `insert into jueces(
@@ -31,8 +27,8 @@ function store(req, res) {
         fecha_nacimiento,
         edad,
         sexo,
-        id_paises,
-        id_ciudades)
+        nombre_paises,
+        nombre_ciudades)
     values (?)`,
     [
       [
@@ -41,8 +37,8 @@ function store(req, res) {
         fecha_nacimiento,
         edad,
         sexo,
-        id_paises,
-        id_ciudades,
+        nombre_paises,
+        nombre_ciudades,
       ],
     ],
     (error,results) => {
@@ -60,11 +56,11 @@ function update(req, res) {
   const fecha_nacimiento=req.body.fecha_nacimiento;
   const edad=req.body.edad;
   const sexo=req.body.sexo;
-  const id_paises=req.body.id_paises;
-  const id_ciudades=req.body.id_ciudades;
+  const nombre_paises=req.body.nombre_paises;
+  const nombre_ciudades=req.body.nombre_ciudades;
   connection.query(
-    `update jueces SET nombre=?,apellido=?,fecha_nacimiento=?,edad=?,sexo=?,id_paises=?, id_ciudades where id=?;`,
-    [nombre,apellido,fecha_nacimiento,edad,sexo,id_paises,id_ciudades,id],
+    `update jueces SET nombre=?,apellido=?,fecha_nacimiento=?,edad=?,sexo=?,nombre_paises=?, nombre_ciudades where id=?;`,
+    [nombre,apellido,fecha_nacimiento,edad,sexo,nombre_paises,nombre_ciudades,id],
 
     (error,results) => {
       res.send(results);
