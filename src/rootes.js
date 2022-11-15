@@ -20,6 +20,7 @@ const {perfilesController}=require("./controllers/perfiles");
 const {sancionesController}=require("./controllers/sanciones");
 const {torneosController}=require("./controllers/torneos");
 const {premiosController}=require("./controllers/premios");
+const {proximosencuentros}=require("./controllers/partidas");
 
 const {ciudadesController}=require("./controllers/ciudades");
 const {paisesController}=require("./controllers/paises");
@@ -247,6 +248,8 @@ app.delete("/jueces/:id", juecesController.destroy);
 //Crud Partidas
 
 app.get("/partidas", partidasController.index);
+
+app.get("/proximosencuentros", proximosencuentrosController.index);
 
 //creando un jugadores
 app.post("/partidas",partidasController.store);

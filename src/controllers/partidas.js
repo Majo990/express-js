@@ -19,6 +19,24 @@ function index(req, res) {
   });
 }
 
+function proximosencuentros(req, res) {
+  // with placeholder
+  connection.query(`
+
+  select pj.*, p.*, j.nombre as nombre_jugadores,
+  c.nombre as nombre_cancha from partidas_jugadores pj
+    left outer join partidas p
+    on p.id= pj.id_partidas
+    left outer join jugadores j
+    on j.id = pj.id_jugadores
+    left outer join canchas c
+    on c.id_partidas =p.id;`
+
+  , function (err, results) {
+    res.send(results);
+  });
+}
+
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
