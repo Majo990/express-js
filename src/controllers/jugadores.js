@@ -32,7 +32,6 @@ function store(req, res) {
   const nombre = data.nombre;
   const nacionalidad = data.nacionalidad;
   const id_entrenadores = data.id_entrenadores;
-  const sejuego = data.sejuego;
   const edad = data.edad;
   const sexo = data.sexo;
   const id_arbitros = data.id_arbitros;
@@ -50,7 +49,6 @@ function store(req, res) {
         nombre,
         nacionalidad,
         id_entrenadores,
-        sejuego,
         edad,
         sexo,
         id_arbitros,
@@ -68,7 +66,6 @@ function store(req, res) {
         nombre,
         nacionalidad,
         id_entrenadores,
-        sejuego,
         edad,
         sexo,
         id_arbitros,
@@ -114,7 +111,7 @@ function update(req, res) {
       nombre,
       nacionalidad,
       id_entrenadores,
-      sejuego,
+
       edad,
       sexo,
       id_abitros,
