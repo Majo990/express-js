@@ -21,7 +21,6 @@ function store(req, res) {
   const nombre = data.nombre;
   const id_jugadores = data.id_jugadores;
   const cancha = data.cancha;
-  const departamento = data.departamento;
   const cesped = data.cesped;
   const administrador = data.administrador;
   const propietario = data.propietario;
@@ -35,7 +34,6 @@ function store(req, res) {
         nombre,
         id_jugadores,
         cancha,
-        departamento,
         cesped,
         administrador,
         propietario,
@@ -49,7 +47,6 @@ function store(req, res) {
         nombre,
         id_jugadores,
         cancha,
-        departamento,
         cesped,
         administrador,
         propietario,
