@@ -249,7 +249,7 @@ app.delete("/jueces/:id", juecesController.destroy);
 
 app.get("/partidas", partidasController.index);
 
-app.get("/proximosencuentros", proximosencuentrosController.index);
+//app.get("/proximosencuentros", proximosencuentrosController.index);
 
 //creando un jugadores
 app.post("/partidas",partidasController.store);
