@@ -47,12 +47,12 @@ app.delete("/jugadores/:id", jugadoresController.destroy);
 // crud usuaris
 
 //select usuarios
-
+/*
 app.get("/partidas", proximosencuentrosController.index);
 app.post("/partidas", proximosencuentrosController.store);
 app.put("/partidas/:id",  proximosencuentrosController.update);
 app.delete("/partidas/:id", proximosencuentrosController.destroy);
-
+*/
 
 //select user
 app.get("/usuarios", usuariosController.index);

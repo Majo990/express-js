@@ -33,6 +33,7 @@ function store(req, res) {
   const nombre_paises = data.nombre_paises;
   const nombre_ciudades = data.nombre_ciudades;
 
+ 
   connection.query(
     `insert into equipos(
       nombre,
