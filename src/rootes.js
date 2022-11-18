@@ -20,7 +20,7 @@ const {perfilesController}=require("./controllers/perfiles");
 const {sancionesController}=require("./controllers/sanciones");
 const {torneosController}=require("./controllers/torneos");
 const {premiosController}=require("./controllers/premios");
-const {proximosencuentros}=require("./controllers/partidas");
+const {proximosencuentrosController}=require("./controllers/partidas");
 
 const {ciudadesController}=require("./controllers/ciudades");
 const {paisesController}=require("./controllers/paises");
@@ -47,6 +47,12 @@ app.delete("/jugadores/:id", jugadoresController.destroy);
 // crud usuaris
 
 //select usuarios
+
+app.get("/partidas", proximosencuentrosController.index);
+app.post("/partidas", proximosencuentrosController.store);
+app.put("/partidas/:id",  proximosencuentrosController.update);
+app.delete("/partidas/:id", proximosencuentrosController.destroy);
+
 
 //select user
 app.get("/usuarios", usuariosController.index);
@@ -150,8 +156,6 @@ app.put("/entrenadores/:id", entrenadoresController.update);
 
 //eliminando un jugador
 app.delete("/entrenadores/:id", entrenadoresController.destroy);
-
-
 
 
 // crud equipos

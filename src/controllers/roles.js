@@ -1,5 +1,6 @@
 
 
+
 const { connection } = require("../db");
 
 //select jugadores
@@ -17,12 +18,12 @@ function store(req, res) {
 
   connection.query(
     `insert into roles(
-        descripcion) 
+        descripcion)
     values (?)`,
     [
       [
         descripcion,
-    
+
       ],
     ],
     (error,results) => {
@@ -49,14 +50,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from roles where id=${id}`, 
+  connection.query(` delete from roles where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 
@@ -68,4 +69,4 @@ module.exports.rolesController = {
 };
 
 
-// 
+//

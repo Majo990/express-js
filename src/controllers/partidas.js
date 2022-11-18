@@ -1,4 +1,4 @@
-
+const { query } = require("express");
 const { connection } = require("../db");
 
 //select jugadores
@@ -19,8 +19,9 @@ function index(req, res) {
   });
 }
 
-function proximosencuentros(req, res) {
+function proximosencuentros(req,res) {
   // with placeholder
+  index()
   connection.query(`
 
   select pj.*, p.*, j.nombre as nombre_jugadores,
@@ -31,11 +32,12 @@ function proximosencuentros(req, res) {
     on j.id = pj.id_jugadores
     left outer join canchas c
     on c.id_partidas =p.id;`
-
   , function (err, results) {
     res.send(results);
   });
 }
+
+
 
 //creando un jugadores
 function store(req, res) {
