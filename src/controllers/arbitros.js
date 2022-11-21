@@ -71,7 +71,7 @@ const nombre = req.body.nombre;
  const nombre_ciudades=req.body.nombre_ciudades;
 
   connection.query(
-    `update arbitros SET nombre=?,apellido=?,edad=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,nombre_paises=?,nombre_ciudades=?where id=?;`,
+    `update arbitros SET nombre=?,apellido=?,edad=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [nombre,apellido,edad,sexo,altura,peso,fecha_nacimiento,nombre_paises,nombre_ciudades,id],
     (error,results) => {
       res.send(results);
