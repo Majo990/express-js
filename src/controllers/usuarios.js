@@ -30,10 +30,11 @@ function one(req) {
 function index(req, res) {
   // with placeholder
   connection.query(
-    ` select u.*,r.descripcion as descripcion_roles from usuarios u
+    `  select u.*,r.descripcionrol  as descripcion_roles from usuarios u
     left outer join roles r
     on r.id=u.id_roles`,
     function (err, results) {
+      console.log(results);
       res.send(results);
     }
   );

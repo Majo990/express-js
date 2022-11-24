@@ -3,7 +3,11 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(` select * from permisos_roles pr`, function (err, results) {
+  connection.query(`select pr.*,r.descripcionrol, p.descripcionpermiso  from permisos_roles pr
+  left outer join roles r
+  on  r.id = pr.id_roles
+  left outer join permisos p
+  on p.id =pr.id_permisos`, function (err, results) {
     res.send(results);
   });
 }
