@@ -24,14 +24,13 @@ function store(req, res) {
 
   connection.query(
     `insert into torneos(
-
         fecha,
         id_estadios,
         nombre,
         nombre_paises,
         nombre_ciudades)
     values (?)`,
-    [[fecha, id_estadios, nombre, nombre_paises, nombre_ciudades]],
+    [[fecha,id_estadios,nombre,nombre_paises,nombre_ciudades]],
     (error, results) => {
       res.send(results);
     }
@@ -49,7 +48,7 @@ function update(req, res) {
   const nombre_ciudades = req.body.nombre_ciudades;
   connection.query(
     `update torneos SET fecha=?,id_estadios=?,nombre=?,nombre_paises,nombre_ciudades where id=?;`,
-    [fecha, id_estadios, nombre, nombre_paises, nombre_ciudades, id],
+    [fecha,id_estadios,nombre,nombre_paises,nombre_ciudades,id],
 
     (error, results) => {
       res.send(results);

@@ -31,7 +31,7 @@ function store(req, res) {
   const apodos = data.apodos;
   const id_estadios = data.id_estadios;
   const nombre_paises = data.nombre_paises;
-  const nombre_ciudades = data.nombre_ciudades;
+  const nombre_ciudades=data.nombre_ciudades;
 
 
   connection.query(
@@ -46,8 +46,7 @@ function store(req, res) {
       presidente,
       apodos,
       id_estadios,
-      nombre_paises,
-      nombre_ciudades)
+      nombre_paises )
     values (?)`,
     [
       [
@@ -63,6 +62,7 @@ function store(req, res) {
         id_estadios,
         nombre_paises,
         nombre_ciudades,
+
       ],
     ],
     (error, results) => {
@@ -87,10 +87,10 @@ function update(req, res) {
   const apodos = req.body.apodos;
   const id_estadios = req.body.id_estadios;
   const nombre_paises = req.body.nombre_paises;
-  const nombre_ciudades = req.body.nombre_ciudades;
+const nombre_ciudades=req.body.nombre_ciudades;
 
   connection.query(
-    `update equipos SET nombre=?,fecha_fundo=?,id_jugadores=?,id_entrenadores=?,descripcion=?,simbolo=?,indumentaria_uniforme=?,presidente=?,apodos=?,id_estadios=?,nombre_paises=?,nombre_ciudades where id=?;`,
+    `update equipos SET nombre=?,fecha_fundo=?,id_jugadores=?,id_entrenadores=?,descripcion=?,simbolo=?,indumentaria_uniforme=?,presidente=?,apodos=?,id_estadios=?,nombre_paises=? where id=?;`,
     [
       nombre,
       fecha_fundo,
@@ -104,8 +104,7 @@ function update(req, res) {
       id_estadios,
       nombre_paises,
       nombre_ciudades,
-      id,
-    ],
+     id],
 
     (error, results) => {
       res.send(results);
@@ -118,7 +117,7 @@ function update(req, res) {
 function destroy(req, res) {
   const id = req.params.id;
 
-  connection.query(` delete from equipos where id=${id}`, (error, results) => {
+  connection.query(`delete from equipos where id=${id}`, (error, results) => {
     res.send(results);
   });
 }

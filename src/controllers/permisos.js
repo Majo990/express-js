@@ -1,14 +1,9 @@
-
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(` select p.*, u.usuarios as usuarios_usuarios,r.descripcionrol  as descripcion_roles from permisos p
-  left outer join usuarios u
-  on u.id=p.id_usuarios
-   left outer join roles r
-  on r.id=p.id_roles`, function (err, results) {
+  connection.query("select *from permisos p ", function (err, results) {
     res.send(results);
   });
 }
@@ -16,24 +11,14 @@ function index(req, res) {
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const id_usuarios=data.id_usuarios;
-  const descripcionpermiso = data.descripcionpermiso;
-  const id_roles = data.id_roles;
+  const descripcion = data.descripcion;
 
   connection.query(
-    `insert into permisos(
-        id_usuarios,
-        descripcionpermiso,
-        id_roles)
+    `insert into permisos
+        descripcion)
     values (?)`,
-    [
-      [
-        id_usuarios,
-        descripcionpermiso,
-        id_roles,
-      ],
-    ],
-    (error,results) => {
+    [[descripcion]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -43,30 +28,26 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const id_usuarios=req.id_usuarios;
-  const descripcionpermiso= req.body.descripcionpermiso;
- const  id_roles= req.body.id_roles;
-  connection.query(
-    `update permisos SET id_usuarios=?,descripcionpermiso=?,id_roles=? where id=?;`,
-    [id_usuarios,descripcionpermiso,id_roles,id],
 
-    (error,results) => {
+  const descripcion = req.body.descripcion;
+
+  connection.query(
+    `update permisos SET descripcion=? where id=?;`,
+    [descripcion, id],
+
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(` delete from permisos where id=${id}`,
-  (
-    error,results) => {
-      res.send(results);
-
+  connection.query(` delete from permisos where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 

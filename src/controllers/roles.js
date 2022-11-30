@@ -3,32 +3,34 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
-  select r.*, p.descripcionpermiso,p.id as id_permisos from roles r
-  left outer join permisos_roles pr
-  on pr.id_roles =r.id
-  left outer join permisos p
-  on p.id  =pr.id_permisos`, function (err, results) {
-    res.send(results);
-  });
+  connection.query(
+    `
+    select r.*, p.descripcion as descripcionrol,p.id as id_permisos from roles r
+    left outer join permisos_roles pr
+    on pr.id_roles =r.id
+    left outer join permisos p
+    on p.id  =pr.id_permisos
+  `,
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
-//creando un jugadores
+//creando roles
 function store(req, res) {
   const data = req.body;
-const descripcionpermiso=descripcionpermiso;
-const descripcionrol=descripcionrol;
-const id_permisos_roles=id_permisos_roles;
+  const descripcion = data.descripcion;
 
   connection.query(
     `insert into roles(
-        descripcionrol,
-        id_permisos_roles,
-        descripcionpermiso)
+        descripcion)
     values (?)`,
-    [[descripcionrol,descripcionpermiso,id_permisos_roles]],
+    [[descripcion]],
     (error, results) => {
+    if (error == res.send (error))
       res.send(results);
+
     }
   );
 }
@@ -38,11 +40,9 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const descripcionrol = req.body.descripcionrol;
-  const descripcionpermiso=req.body.descripcionpermiso;
-  const id_permisos_roles=req.body.id_permisos_roles;
   connection.query(
-    `update roles SET descripcionrol=?,descripcionpermiso=?,id_permisos_roles where id=?;`,
-    [descripcionrol, descripcionpermiso,id_permisos_roles,id],
+    `update roles SET descripcionrol=?  where id=?;`,
+    [descripcionrol, id],
 
     (error, results) => {
       res.send(results);
