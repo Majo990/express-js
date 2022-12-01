@@ -52,9 +52,9 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const descripcion = req.body.descripcion;
-  const id_jugadores=req.id_jugadores;
-  const id_arbitros=req.id_arbitros;
-  const id_sanciones=req.id_sanciones;
+  const id_jugadores=req.body.id_jugadores;
+  const id_arbitros=req.body.id_arbitros;
+  const id_sanciones=req.body.id_sanciones;
 
   connection.query(
     `update comportamientos SET descripcion=?,id_jugadores=?,id_arbitros=?,id_sanciones=? where id=?;`,

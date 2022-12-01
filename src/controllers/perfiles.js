@@ -4,9 +4,7 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(
-    `
-
-  select   p.*,u.usuarios  from perfiles p
+    `select   p.*,u.usuarios  from perfiles p
   left outer join  usuarios u
   on  u.id = p.id_usuarios`,
     function (err, results) {

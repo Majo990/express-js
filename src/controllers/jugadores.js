@@ -93,25 +93,24 @@ function update(req, res) {
   const nacionalidad = req.body.nacionalidad;
   const id_entrenadores = req.body.id_entrenadores;
   //  const sejuego=req.body.sejuego; puntaje
-  const edad = req.edad;
-  const sexo = req.sexo;
-  const id_abitros = req.id_abitros;
-  const id_equipos = req.id_equipos;
-  const id_torneos = req.id_torneos;
-  const id_sanciones = req.id_sanciones;
-  const altura = req.altura;
-  const peso = req.peso;
-  const nombre_paises = req.nombre_paises;
-  const nombre_ciudades = req.nombre_ciudades;
-  const posicion = req.posicion;
+  const edad = req.body.edad;
+  const sexo = req.body.sexo;
+  const id_abitros = req.body.id_abitros;
+  const id_equipos = req.body.id_equipos;
+  const id_torneos = req.body.id_torneos;
+  const id_sanciones = req.body.id_sanciones;
+  const altura = req.body.altura;
+  const peso = req.body.peso;
+  const nombre_paises = req.body.nombre_paises;
+  const nombre_ciudades = req.body.nombre_ciudades;
+  const posicion = req.body.posicion;
 
   connection.query(
-    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=?,posicion=?,reside_paises=? where id=?;`,
+    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=?,posicion=? where id=?;`,
     [
       nombre,
       nacionalidad,
       id_entrenadores,
-
       edad,
       sexo,
       id_abitros,
