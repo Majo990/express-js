@@ -4,7 +4,7 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query("select * from jueces j ", function (err, results) {
+  connection.query(`select * from jueces j `, function (err, results) {
     res.send(results);
   });
 }
@@ -28,7 +28,8 @@ function store(req, res) {
         edad,
         sexo,
         nombre_paises,
-        nombre_ciudades)
+        nombre_ciudades
+        )
     values (?)`,
     [
       [
@@ -74,7 +75,7 @@ function destroy(req, res) {
 
   const id = req.params.id;
 
-  connection.query(` delete from jueces where id=${id}`,
+  connection.query(`delete from jueces where id=${id}`,
   (
     error,results) => {
       res.send(results);

@@ -31,6 +31,9 @@ const { permisos_rolesController } = require("./controllers/permisos_roles");
 const { ciudadesController } = require("./controllers/ciudades");
 const { paisesController } = require("./controllers/paises");
 
+
+const { deportesController} = require("./controllers/deportes");
+
 const controllers = require("./controllers");
 
 app.post("/login", controllers.login);
@@ -346,5 +349,18 @@ app.put("/ciudades/:id", ciudadesController.update);
 app.delete("/ciudades/:id", ciudadesController.destroy);
 
 //crud de provincia
+
+//crud deportes
+app.get("/deporte", deportesController.index);
+
+//creando un jugadores
+app.post("/deportes", deportesController.store);
+
+//actualizando juadores
+app.put("/deportess/:id", deportesController.update);
+
+//eliminando un jugador
+app.delete("/deportes/:id", deportesController.destroy);
+
 
 module.exports = app;
