@@ -7,8 +7,12 @@ async function index(req, res) {
     baseURL: "https://countriesnow.space/api/v0.1/countries",
   });
 
-  const r = await instance.get("/");
-  res.send(r.data.data);
+  try {
+    const r = await instance.get("/");
+    res.send(r.data.data);
+  } catch (error) {
+    res.send([]);
+  }
 }
 
 //creando un jugadores
