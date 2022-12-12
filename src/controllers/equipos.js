@@ -46,7 +46,7 @@ function store(req, res) {
       apodos,
       id_estadios,
       nombre_paises,
-      nombre_ciudades )
+      nombre_ciudades)
     values (?)`,
     [
       [

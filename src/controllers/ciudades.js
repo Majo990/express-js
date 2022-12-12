@@ -8,6 +8,13 @@ function index(req, res) {
     res.send(results);
   });
 }
+/*
+try {
+  const throw "my exception";
+}
+catch (e){
+logMyError(e);
+}*/
 
 //creando un jugadores
 function store(req, res) {

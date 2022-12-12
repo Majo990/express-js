@@ -4,8 +4,7 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(
-    `
-    select r.*, p.descripcion as descripcionrol,p.id as id_permisos from roles r
+    `select r.*, p.descripcion as descripcionpermiso,p.id as id_permisos, pr.id as id_permisos_roles from roles r
     left outer join permisos_roles pr
     on pr.id_roles =r.id
     left outer join permisos p
@@ -28,9 +27,7 @@ function store(req, res) {
     values (?)`,
     [[descripcion]],
     (error, results) => {
-    if (error == res.send (error))
-      res.send(results);
-
+      if (error == res.send(error)) res.send(results);
     }
   );
 }
@@ -39,10 +36,10 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const descripcionrol = req.body.descripcionrol;
+  const descripcion = req.body.descripcion;
   connection.query(
-    `update roles SET descripcionrol=?  where id=?;`,
-    [descripcionrol, id],
+    `update roles SET descripcion=? where id=?;`,
+    [descripcion, id],
 
     (error, results) => {
       res.send(results);
@@ -55,7 +52,7 @@ function update(req, res) {
 function destroy(req, res) {
   const id = req.params.id;
 
-  connection.query(` delete from roles where id=${id}`, (error, results) => {
+  connection.query(`delete from roles where id=${id}`, (error, results) => {
     res.send(results);
   });
 }

@@ -46,14 +46,8 @@ function update(req, res) {
   const id_permisos = req.body.id_permisos;
 
   connection.query(
-    `update permisos_roles
-    SET id_roles=?,
-    id_permisos=?
-    where id=?;`,
+    `update permisos_roles SET id_roles=?, id_permisos=? where id=?;`,
     [id_roles, id_permisos, id],
-
-
-
     (error, results) => {
       res.send(results);
       console.log(error);
