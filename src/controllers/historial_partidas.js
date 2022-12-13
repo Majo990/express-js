@@ -86,7 +86,7 @@ function update(req, res) {
   const id_jugadores = req.body.id_jugadores;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const fecha_hora = req.body.fecha_hora;
-  const id_rondas = rq.body.id_rondas;
+  const id_rondas = req.body.id_rondas;
   const puntaje = req.body.puntaje;
   const id_eventos = req.body.id_eventos;
   const id_jueces = req.body.id_jueces;
@@ -104,9 +104,8 @@ function update(req, res) {
       ,id_eventos=?
       ,id_jueces=?
       ,id_premios=?
-      ,id_faltas=?
-      ,id_partidas
-      id_arbitros
+      ,id_faltas=?,id_partidas=?
+      ,id_arbitros=?
     where id=?;`,
     [
       id_jugadores,

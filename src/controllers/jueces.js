@@ -60,7 +60,7 @@ function update(req, res) {
   const nombre_paises=req.body.nombre_paises;
   const nombre_ciudades=req.body.nombre_ciudades;
   connection.query(
-    `update jueces SET nombre=?,apellido=?,fecha_nacimiento=?,edad=?,sexo=?,nombre_paises=?,nombre_ciudades where id=?;`,
+    `update jueces SET nombre=?,apellido=?,fecha_nacimiento=?,edad=?,sexo=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [nombre,apellido,fecha_nacimiento,edad,sexo,nombre_paises,nombre_ciudades,id],
 
     (error,results) => {

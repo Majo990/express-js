@@ -4,9 +4,9 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(
-    `select  t.*, e.nombre as nombre_estadios  from  torneos t
+    `select  t.*, e.nombre as nombre_estadios from  torneos t
   left outer join estadios e
-  on e.id = t.id_estadios `,
+  on e.id = t.id_estadios`,
     function (err, results) {
       res.send(results);
     }
@@ -28,14 +28,25 @@ function store(req, res) {
         id_estadios,
         nombre,
         nombre_paises,
-        nombre_ciudades)
+        nombre_ciudades
+        )
     values (?)`,
-    [[fecha,id_estadios,nombre,nombre_paises,nombre_ciudades]],
+    [
+      [fecha,
+      id_estadios,
+      nombre,
+      nombre_paises,
+      nombre_ciudades,
+
+    ],
+  ],
     (error, results) => {
       res.send(results);
     }
+
   );
 }
+
 
 //actualizando juadores
 function update(req, res) {
@@ -47,7 +58,7 @@ function update(req, res) {
   const nombre_paises = req.body.nombre_paises;
   const nombre_ciudades = req.body.nombre_ciudades;
   connection.query(
-    `update torneos SET fecha=?,id_estadios=?,nombre=?,nombre_paises,nombre_ciudades where id=?;`,
+    `update torneos SET fecha=?,id_estadios=?,nombre=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [fecha,id_estadios,nombre,nombre_paises,nombre_ciudades,id],
 
     (error, results) => {
@@ -61,7 +72,7 @@ function update(req, res) {
 function destroy(req, res) {
   const id = req.params.id;
 
-  connection.query(` delete from torneos where id=${id}`, (error, results) => {
+  connection.query(`delete from torneos where id=${id}`, (error, results) => {
     res.send(results);
   });
 }

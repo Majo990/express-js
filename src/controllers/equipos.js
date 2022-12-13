@@ -46,7 +46,8 @@ function store(req, res) {
       apodos,
       id_estadios,
       nombre_paises,
-      nombre_ciudades)
+      nombre_ciudades
+      )
     values (?)`,
     [
       [
@@ -62,6 +63,7 @@ function store(req, res) {
         id_estadios,
         nombre_paises,
         nombre_ciudades,
+        
       ],
     ],
     (error, results) => {
@@ -90,8 +92,7 @@ function update(req, res) {
 
   connection.query(
     `update equipos SET nombre=?,fecha_fundo=?,id_jugadores=?,id_entrenadores=?,descripcion=?,simbolo=?,indumentaria_uniforme=?,presidente=?,apodos=?,id_estadios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
-    [
-      nombre,
+    [nombre,
       fecha_fundo,
       id_jugadores,
       id_entrenadores,

@@ -14,7 +14,7 @@ function store(req, res) {
   const descripcion = data.descripcion;
 
   connection.query(
-    `insert into permisos
+    `insert into permisos(
         descripcion)
     values (?)`,
     [[descripcion]],
