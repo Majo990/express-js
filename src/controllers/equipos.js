@@ -63,7 +63,7 @@ function store(req, res) {
         id_estadios,
         nombre_paises,
         nombre_ciudades,
-        
+
       ],
     ],
     (error, results) => {
@@ -104,8 +104,7 @@ function update(req, res) {
       id_estadios,
       nombre_paises,
       nombre_ciudades,
-      id,
-    ],
+      id],
 
     (error, results) => {
       res.send(results);

@@ -6,7 +6,6 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-
   select  j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
   t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
   left outer join entrenadores e
@@ -119,8 +118,7 @@ function update(req, res) {
       peso,
       nombre_paises,
       nombre_ciudades,
-      id,
-    ],
+      id],
 
     () => {
       res.send("Ok");

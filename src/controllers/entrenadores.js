@@ -80,7 +80,7 @@ function update(req, res) {
       fecha_nacimiento,
       nombre_paises,
       nombre_ciudades,
-      id,
+      id
     ],
 
     (error, results) => {

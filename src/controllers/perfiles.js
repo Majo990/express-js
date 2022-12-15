@@ -20,8 +20,6 @@ function store(req, res) {
   const apellido = data.apellido;
   const edad = data.edad;
   const sexo = data.sexo;
-  const pais = data.pais;
-  const ciudad = data.ciudad;
   const dni = data.dni;
   const nacionalidad = data.nacionalidad;
   const email = data.email;
@@ -38,8 +36,6 @@ function store(req, res) {
         apellido,
         edad,
         sexo,
-        pais,
-        ciudad,
         dni,
         nacionalidad,
         email,
@@ -48,7 +44,8 @@ function store(req, res) {
         codigo_postal,
         id_usuarios,
         nombre_paises,
-        nombre_ciudades)
+        nombre_ciudades
+        )
     values (?)`,
     [
       [
@@ -56,8 +53,6 @@ function store(req, res) {
         apellido,
         edad,
         sexo,
-        pais,
-        ciudad,
         dni,
         nacionalidad,
         email,
@@ -83,8 +78,6 @@ function update(req, res) {
   const apellido = req.body.apellido;
   const edad = req.body.edad;
   const sexo = req.body.sexo;
-  const pais = req.body.pais;
-  const ciudad = req.body.ciudad;
   const dni = req.body.dni;
   const nacionalidad = req.body.nacionalidad;
   const email = req.body.email;
@@ -96,14 +89,12 @@ function update(req, res) {
   const nombre_ciudades = req.nombre_ciudades;
 
   connection.query(
-    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,pais=?,ciudad=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       apellido,
       edad,
       sexo,
-      pais,
-      ciudad,
       dni,
       nacionalidad,
       email,

@@ -31,7 +31,8 @@ function store(req, res) {
         descripcion,
         id_jugadores,
         id_arbitros,
-        id_sanciones)
+        id_sanciones
+        )
     values (?)`,
     [
       [
