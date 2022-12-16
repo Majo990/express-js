@@ -1,5 +1,9 @@
+require("express-router-group");
 const express = require("express");
-const app = express();
+const app = express.Router();
+
+const { authenticateToken } = require("./jwt");
+
 const { usuariosController } = require("./controllers/usuarios");
 const { jugadoresController } = require("./controllers/jugadores");
 const { arbitrosController } = require("./controllers/arbitros");
@@ -31,336 +35,345 @@ const { permisos_rolesController } = require("./controllers/permisos_roles");
 const { ciudadesController } = require("./controllers/ciudades");
 const { paisesController } = require("./controllers/paises");
 
-
-const { deportesController} = require("./controllers/deportes");
+const { deportesController } = require("./controllers/deportes");
 
 const controllers = require("./controllers");
 
 app.post("/login", controllers.login);
 
-//select jugadores
-app.get("/jugadores", jugadoresController.index);
+//router.use(authenticateToken);
 
-//creando un jugadores
-app.post("/jugadores", jugadoresController.store);
+app.group("/api", authenticateToken, (router) => {
+  router.get("/user", (req) => req.user);
+  //select jugadores
+  router.get("/jugadores", jugadoresController.index);
 
-//actualizando juadores
-app.put("/jugadores/:id", jugadoresController.update);
+  //creando un jugadores
+  router.post("/jugadores", jugadoresController.store);
 
-//eliminando un jugador
-app.delete("/jugadores/:id", jugadoresController.destroy);
+  //actualizando juadores
+  router.put("/jugadores/:id", jugadoresController.update);
 
-// crud usuaris
+  //eliminando un jugador
+  router.delete("/jugadores/:id", jugadoresController.destroy);
 
-//select usuarios
-/*
-app.get("/partidas", proximosencuentrosController.index);
-app.post("/partidas", proximosencuentrosController.store);
-app.put("/partidas/:id",  proximosencuentrosController.update);
-app.delete("/partidas/:id", proximosencuentrosController.destroy);
+  // crud usuaris
+
+  //select usuarios
+  /*
+router.get("/partidas", proximosencuentrosController.index);
+router.post("/partidas", proximosencuentrosController.store);
+router.put("/partidas/:id",  proximosencuentrosController.update);
+router.delete("/partidas/:id", proximosencuentrosController.destroy);
 */
 
-//select user
-app.get("/usuarios", usuariosController.index);
+  //select user
+  router.get("/usuarios", usuariosController.index);
 
-//creando un user
-app.post("/usuarios", usuariosController.store);
+  //creando un user
+  router.post("/usuarios", usuariosController.store);
 
-//actualizando user
-app.put("/usuarios/:id", usuariosController.update);
+  //actualizando user
+  router.put("/usuarios/:id", usuariosController.update);
 
-//eliminando un user
-app.delete("/usuarios/:id", usuariosController.destroy);
+  //eliminando un user
+  router.delete("/usuarios/:id", usuariosController.destroy);
 
-//crud de roles/user
+  //crud de roles/user
 
-app.get("/roles", rolesController.index);
+  router.get("/roles", rolesController.index);
 
-//creando un jugadores
-app.post("/roles", rolesController.store);
+  //creando un jugadores
+  router.post("/roles", rolesController.store);
 
-//actualizando juadores
-app.put("/roles/:id", rolesController.update);
+  //actualizando juadores
+  router.put("/roles/:id", rolesController.update);
 
-//eliminando un jugador
-app.delete("/roles/:id", rolesController.destroy);
+  //eliminando un jugador
+  router.delete("/roles/:id", rolesController.destroy);
 
-//Crud permisos
+  //Crud permisos
 
-app.get("/permisos", permisosController.index);
+  router.get("/permisos", permisosController.index);
 
-//creando un permi
-app.post("/permisos", permisosController.store);
+  //creando un permi
+  router.post("/permisos", permisosController.store);
 
-//actualizando permi
-app.put("/permisos/:id", permisosController.update);
+  //actualizando permi
+  router.put("/permisos/:id", permisosController.update);
 
-//eliminando un permi
-app.delete("/permisos/:id", permisosController.destroy);
+  //eliminando un permi
+  router.delete("/permisos/:id", permisosController.destroy);
 
-//Crud perfiles
+  //Crud perfiles
 
-app.get("/perfiles", perfilesController.index);
+  router.get("/perfiles", perfilesController.index);
 
-//creando un permi
-app.post("/perfiles", perfilesController.store);
+  //creando un permi
+  router.post("/perfiles", perfilesController.store);
 
-//actualizando permi
-app.put("/perfiles/:id", perfilesController.update);
+  //actualizando permi
+  router.put("/perfiles/:id", perfilesController.update);
 
-//eliminando un permi
-app.delete("/perfiles/:id", perfilesController.destroy);
+  //eliminando un permi
+  router.delete("/perfiles/:id", perfilesController.destroy);
 
-/// crud permisos-roles
+  /// crud permisos-roles
 
-app.get("/permisos_roles", permisos_rolesController.index);
+  router.get("/permisos_roles", permisos_rolesController.index);
 
-//creando un jugadores
-app.post("/permisos_roles", permisos_rolesController.store);
+  //creando un jugadores
+  router.post("/permisos_roles", permisos_rolesController.store);
 
-//actualizando juadores
-app.put("/permisos_roles/:id", permisos_rolesController.update);
+  //actualizando juadores
+  router.put("/permisos_roles/:id", permisos_rolesController.update);
 
-//eliminando un jugador
-app.delete("/permisos_roles/:id", permisos_rolesController.destroy);
+  //eliminando un jugador
+  router.delete("/permisos_roles/:id", permisos_rolesController.destroy);
 
-// crud de arbitros
+  // crud de arbitros
 
-//select arbit
-app.get("/arbitros", arbitrosController.index);
+  //select arbit
+  router.get("/arbitros", arbitrosController.index);
 
-//creando un arbit
-app.post("/arbitros", arbitrosController.store);
+  //creando un arbit
+  router.post("/arbitros", arbitrosController.store);
 
-//actualizando arbit
-app.put("/arbitros/:id", arbitrosController.update);
+  //actualizando arbit
+  router.put("/arbitros/:id", arbitrosController.update);
 
-//eliminando un arbit
-app.delete("/arbitros/:id", arbitrosController.destroy);
+  //eliminando un arbit
+  router.delete("/arbitros/:id", arbitrosController.destroy);
 
-// crud comportamientos
+  // crud comportamientos
 
-app.get("/comportamientos", comportamientosController.index);
+  router.get("/comportamientos", comportamientosController.index);
 
-//creando un compor
-app.post("/comportamientos", comportamientosController.store);
+  //creando un compor
+  router.post("/comportamientos", comportamientosController.store);
 
-//actualizando compor
-app.put("/comportamientos/:id", comportamientosController.update);
+  //actualizando compor
+  router.put("/comportamientos/:id", comportamientosController.update);
 
-//eliminando un compor
-app.delete("/comportamientos/:id", comportamientosController.destroy);
+  //eliminando un compor
+  router.delete("/comportamientos/:id", comportamientosController.destroy);
 
-// crud entrenadores
+  // crud entrenadores
 
-app.get("/entrenadores", entrenadoresController.index);
+  router.get("/entrenadores", entrenadoresController.index);
 
-//creando un jugadores0
-app.post("/entrenadores", entrenadoresController.store);
+  //creando un jugadores0
+  router.post("/entrenadores", entrenadoresController.store);
 
-//actualizando juadores
-app.put("/entrenadores/:id", entrenadoresController.update);
+  //actualizando juadores
+  router.put("/entrenadores/:id", entrenadoresController.update);
 
-//eliminando un jugador
-app.delete("/entrenadores/:id", entrenadoresController.destroy);
+  //eliminando un jugador
+  router.delete("/entrenadores/:id", entrenadoresController.destroy);
 
-// crud equipos
+  // crud equipos
 
-app.get("/equipos", equiposController.index);
+  router.get("/equipos", equiposController.index);
 
-//creando un jugadores
-app.post("/equipos", equiposController.store);
+  //creando un jugadores
+  router.post("/equipos", equiposController.store);
 
-//actualizando juadores
-app.put("/equipos/:id", equiposController.update);
+  //actualizando juadores
+  router.put("/equipos/:id", equiposController.update);
 
-//eliminando un jugador
-app.delete("/equipos/:id", equiposController.destroy);
+  //eliminando un jugador
+  router.delete("/equipos/:id", equiposController.destroy);
 
-//crud estadios
+  //crud estadios
 
-app.get("/estadios", estadiosController.index);
+  router.get("/estadios", estadiosController.index);
 
-//creando un jugadores
-app.post("/estadios", estadiosController.store);
+  //creando un jugadores
+  router.post("/estadios", estadiosController.store);
 
-//actualizando juadores
-app.put("/estadios/:id", estadiosController.update);
+  //actualizando juadores
+  router.put("/estadios/:id", estadiosController.update);
 
-//eliminando un jugador
-app.delete("/estadios/:id", estadiosController.destroy);
+  //eliminando un jugador
+  router.delete("/estadios/:id", estadiosController.destroy);
 
-//evento
+  //evento
 
-app.get("/eventos", eventosController.index);
+  router.get("/eventos", eventosController.index);
 
-//creando un jugadores
-app.post("/eventos", eventosController.store);
+  //creando un jugadores
+  router.post("/eventos", eventosController.store);
 
-//actualizando juadores
-app.put("/eventos/:id", eventosController.update);
+  //actualizando juadores
+  router.put("/eventos/:id", eventosController.update);
 
-//eliminando un jugador
-app.delete("/eventos/:id", eventosController.destroy);
+  //eliminando un jugador
+  router.delete("/eventos/:id", eventosController.destroy);
 
-//faltas
+  //faltas
 
-app.get("/faltas", faltasController.index);
+  router.get("/faltas", faltasController.index);
 
-//creando un jugadores
-app.post("/faltas", faltasController.store);
+  //creando un jugadores
+  router.post("/faltas", faltasController.store);
 
-//actualizando juadores
-app.put("/faltas/:id", faltasController.update);
+  //actualizando juadores
+  router.put("/faltas/:id", faltasController.update);
 
-//eliminando un jugador
-app.delete("/faltas/:id", faltasController.destroy);
+  //eliminando un jugador
+  router.delete("/faltas/:id", faltasController.destroy);
 
-//hisotrial patidas
+  //hisotrial patidas
 
-app.get("/historial_partidas", historial_partidasController.index);
+  router.get("/historial_partidas", historial_partidasController.index);
 
-//creando un jugadores
-app.post("/historial_partidas", historial_partidasController.store);
+  //creando un jugadores
+  router.post("/historial_partidas", historial_partidasController.store);
 
-//actualizando juadores
-app.put("/historial_partidas/:id", historial_partidasController.update);
+  //actualizando juadores
+  router.put("/historial_partidas/:id", historial_partidasController.update);
 
-//eliminando un jugador
-app.delete("/historial_partidas/:id", historial_partidasController.destroy);
+  //eliminando un jugador
+  router.delete(
+    "/historial_partidas/:id",
+    historial_partidasController.destroy
+  );
 
-//Crud jueces
+  //Crud jueces
 
-app.get("/jueces", juecesController.index);
+  router.get("/jueces", juecesController.index);
 
-//creando un jugadores
-app.post("/jueces", juecesController.store);
+  //creando un jugadores
+  router.post("/jueces", juecesController.store);
 
-//actualizando juadores
-app.put("/jueces/:id", juecesController.update);
+  //actualizando juadores
+  router.put("/jueces/:id", juecesController.update);
 
-//eliminando un jugador
-app.delete("/jueces/:id", juecesController.destroy);
+  //eliminando un jugador
+  router.delete("/jueces/:id", juecesController.destroy);
 
-//Crud Partidas
+  //Crud Partidas
 
-app.get("/partidas", partidasController.index);
+  router.get("/partidas", partidasController.index);
 
-//app.get("/proximosencuentros", proximosencuentrosController.index);
+  //router.get("/proximosencuentros", proximosencuentrosController.index);
 
-//creando un jugadores
-app.post("/partidas", partidasController.store);
+  //creando un jugadores
+  router.post("/partidas", partidasController.store);
 
-//actualizando juadores
-app.put("/partidas/:id", partidasController.update);
+  //actualizando juadores
+  router.put("/partidas/:id", partidasController.update);
 
-//eliminando un jugador
-app.delete("/partidas/:id", partidasController.destroy);
+  //eliminando un jugador
+  router.delete("/partidas/:id", partidasController.destroy);
 
-//Crud Partidas_jugadores
+  //Crud Partidas_jugadores
 
-app.get("/partidas_jugadores", partidas_jugadoresController.index);
+  router.get("/partidas_jugadores", partidas_jugadoresController.index);
 
-//creando un jugadores
-app.post("/partidas_jugadores", partidas_jugadoresController.store);
+  //creando un jugadores
+  router.post("/partidas_jugadores", partidas_jugadoresController.store);
 
-//actualizando juadores
-app.put("/partidas_jugadores/:id", partidas_jugadoresController.update);
+  //actualizando juadores
+  router.put("/partidas_jugadores/:id", partidas_jugadoresController.update);
 
-//eliminando un jugador
-app.delete("/partidas_jugadores/:id", partidas_jugadoresController.destroy);
+  //eliminando un jugador
+  router.delete(
+    "/partidas_jugadores/:id",
+    partidas_jugadoresController.destroy
+  );
 
-//crud de rondas
+  //crud de rondas
 
-app.get("/rondas", rondasController.index);
+  router.get("/rondas", rondasController.index);
 
-//creando un jugadores
-app.post("/rondas", rondasController.store);
+  //creando un jugadores
+  router.post("/rondas", rondasController.store);
 
-//actualizando juadores
-app.put("/rondas/:id", rondasController.update);
+  //actualizando juadores
+  router.put("/rondas/:id", rondasController.update);
 
-//eliminando un jugador
-app.delete("/rondas/:id", rondasController.destroy);
+  //eliminando un jugador
+  router.delete("/rondas/:id", rondasController.destroy);
 
-//crud de sanciones
+  //crud de sanciones
 
-app.get("/sanciones", sancionesController.index);
+  router.get("/sanciones", sancionesController.index);
 
-//creando un jugadores
-app.post("/sanciones", sancionesController.store);
+  //creando un jugadores
+  router.post("/sanciones", sancionesController.store);
 
-//actualizando juadores
-app.put("/sanciones/:id", sancionesController.update);
+  //actualizando juadores
+  router.put("/sanciones/:id", sancionesController.update);
 
-//eliminando un jugador
-app.delete("/sanciones/:id", sancionesController.destroy);
+  //eliminando un jugador
+  router.delete("/sanciones/:id", sancionesController.destroy);
 
-//crud de torneos
+  //crud de torneos
 
-app.get("/torneos", torneosController.index);
+  router.get("/torneos", torneosController.index);
 
-//creando un jugadores
-app.post("/torneos", torneosController.store);
+  //creando un jugadores
+  router.post("/torneos", torneosController.store);
 
-//actualizando juadores
-app.put("/torneos/:id", torneosController.update);
+  //actualizando juadores
+  router.put("/torneos/:id", torneosController.update);
 
-//eliminando un jugador
-app.delete("/torneos/:id", torneosController.destroy);
+  //eliminando un jugador
+  router.delete("/torneos/:id", torneosController.destroy);
 
-//crud de premios
+  //crud de premios
 
-app.get("/premios", premiosController.index);
+  router.get("/premios", premiosController.index);
 
-//creando un jugadores
-app.post("/premios", premiosController.store);
+  //creando un jugadores
+  router.post("/premios", premiosController.store);
 
-//actualizando juadores
-app.put("/premios/:id", premiosController.update);
+  //actualizando juadores
+  router.put("/premios/:id", premiosController.update);
 
-//eliminando un jugador
-app.delete("/premios/:id", premiosController.destroy);
+  //eliminando un jugador
+  router.delete("/premios/:id", premiosController.destroy);
 
-//crud de paises
+  //crud de paises
 
-app.get("/paises", paisesController.index);
+  router.get("/paises", paisesController.index);
 
-//creando un jugadores
-app.post("/paises", paisesController.store);
+  //creando un jugadores
+  router.post("/paises", paisesController.store);
 
-//actualizando juadores
-app.put("/paises/:id", paisesController.update);
+  //actualizando juadores
+  router.put("/paises/:id", paisesController.update);
 
-//eliminando un jugador
-app.delete("/paises/:id", paisesController.destroy);
+  //eliminando un jugador
+  router.delete("/paises/:id", paisesController.destroy);
 
-//crud de ciudades
+  //crud de ciudades
 
-app.get("/ciudades", ciudadesController.index);
+  router.get("/ciudades", ciudadesController.index);
 
-//creando un jugadores
-app.post("/ciudades", ciudadesController.store);
+  //creando un jugadores
+  router.post("/ciudades", ciudadesController.store);
 
-//actualizando juadores
-app.put("/ciudades/:id", ciudadesController.update);
+  //actualizando juadores
+  router.put("/ciudades/:id", ciudadesController.update);
 
-//eliminando un jugador
-app.delete("/ciudades/:id", ciudadesController.destroy);
+  //eliminando un jugador
+  router.delete("/ciudades/:id", ciudadesController.destroy);
 
-//crud de provincia
+  //crud de provincia
 
-//crud deportes
-app.get("/deportes", deportesController.index);
+  //crud deportes
+  router.get("/deportes", deportesController.index);
 
-//creando un jugadores
-app.post("/deportes", deportesController.store);
+  //creando un jugadores
+  router.post("/deportes", deportesController.store);
 
-//actualizando juadores
-app.put("/deportes/:id", deportesController.update);
+  //actualizando juadores
+  router.put("/deportes/:id", deportesController.update);
 
-//eliminando un jugador
-app.delete("/deportes/:id", deportesController.destroy);
-
+  //eliminando un jugador
+  router.delete("/deportes/:id", deportesController.destroy);
+});
 
 module.exports = app;

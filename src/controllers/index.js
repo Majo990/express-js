@@ -1,3 +1,4 @@
+const { generateAccessToken } = require("../jwt");
 const { usuariosController } = require("./usuarios");
 
 async function login(req, res) {
@@ -6,10 +7,11 @@ async function login(req, res) {
 
   const user = await usuariosController.one(req);
   if ( user && usuariosController.encriptar(password)===user.contraseña) {
-    res.send("Login correcto");
+    const token = generateAccessToken(user);
+    res.json({user,token});
     return;
   }
-  res.send("Login incorrecto");
+  res.sendStatus(401)
 }
 
 module.exports = {
