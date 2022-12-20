@@ -39,7 +39,6 @@ function proximosencuentros(req,res) {
 }
 
 
-
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
@@ -83,6 +82,7 @@ function store(req, res) {
     ],
     (error,results) => {
       res.send(results);
+      console.log(error)
     }
   );
 }
@@ -104,7 +104,7 @@ function update(req, res) {
 /* const  id_historial_partidas=req.body.id_historial_partidas;*/
 
   connection.query(
-    `update partidas SET nombre=?,descripcion=?,id_jugadores=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=?,id_deportes=? where id=?;`,
+    `update partidas SET nombre=?,descripcion=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=?,id_deportes=? where id=?;`,
     [nombre,descripcion,id_torneos,fecha,tiempo_inicio,tiempo_duracion,tiempo_fin,id_rondas,id_deportes,id],
 
     (error,results) => {

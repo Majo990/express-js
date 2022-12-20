@@ -44,18 +44,19 @@ function index(req, res) {
 function store(req, res) {
   const data = req.body;
   const usuarios = data.usuarios;
-  const contraseña = data.contraseña;
+  const contrasenia = data.contrasenia;
   const id_roles = data.id_roles;
 
   connection.query(
     `insert into usuarios(
         usuarios,
-        contraseña,
+        contrasenia,
         id_roles)
     values (?)`,
-    [[usuarios, encriptar(contraseña), id_roles]],
+    [[usuarios, encriptar(contrasenia), id_roles]],
     (error) => {
       res.send("Ok");
+      console.log(error)
     }
   );
 }
@@ -67,10 +68,11 @@ function update(req, res) {
   const usuarios = req.body.usuarios;
   connection.query(
     `update usuarios SET usuarios=?,id_roles where id=?;`,
-    [usuarios,id_roles,id],
+    [usuarios,id],
 
     () => {
       res.send("Ok");
+      console.log(error)
     }
   );
 }
@@ -81,6 +83,7 @@ function destroy(req, res) {
 
   connection.query(` delete from usuarios where id=${id}`, () => {
     res.send("Ok");
+    console.log(error)
   });
 }
 

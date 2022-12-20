@@ -6,7 +6,7 @@ async function login(req, res) {
   const password = req.body.password;
 
   const user = await usuariosController.one(req);
-  if ( user && usuariosController.encriptar(password)===user.contraseña) {
+  if ( user && usuariosController.encriptar(password)===user.contrasenia) {
     const token = generateAccessToken(user);
     res.json({user,token});
     return;

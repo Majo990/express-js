@@ -16,7 +16,7 @@ function store(req, res) {
 
   connection.query(
     `insert into eventos(
-        nombre) 
+        nombre)
     values (?)`,
     [
       [
@@ -48,14 +48,14 @@ function update(req, res) {
 
 //eliminando un jugador
 function destroy(req, res) {
-  
+
   const id = req.params.id;
 
-  connection.query(` delete from eventos where id=${id}`, 
+  connection.query(` delete from eventos where id=${id}`,
   (
     error,results) => {
       res.send(results);
-  
+
   });
 }
 

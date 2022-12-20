@@ -79,6 +79,7 @@ function store(req, res) {
     ],
     (error) => {
       res.send("Ok");
+      console.log(error)
     }
   );
 }
@@ -87,30 +88,30 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const nombre = req.body.nombre;
-  const nacionalidad = req.body.nacionalidad;
-  const id_entrenadores = req.body.id_entrenadores;
+  const nombre =req.body.nombre;
+  const nacionalidad =req.body.nacionalidad;
+  const id_entrenadores =req.body.id_entrenadores;
   //  const sejuego=req.body.sejuego; puntaje
-  const edad = req.body.edad;
-  const sexo = req.body.sexo;
-  const id_abitros = req.body.id_abitros;
-  const id_equipos = req.body.id_equipos;
-  const id_torneos = req.body.id_torneos;
-  const id_sanciones = req.body.id_sanciones;
-  const altura = req.body.altura;
-  const peso = req.body.peso;
-  const nombre_paises = req.body.nombre_paises;
-  const nombre_ciudades = req.body.nombre_ciudades;
+  const edad= req.body.edad;
+  const sexo= req.body.sexo;
+  const id_arbitros=req.body.id_arbitros;
+  const id_equipos=req.body.id_equipos;
+  const id_torneos=req.body.id_torneos;
+  const id_sanciones= req.body.id_sanciones;
+  const altura=req.body.altura;
+  const peso=req.body.peso;
+  const nombre_paises=req.body.nombre_paises;
+  const nombre_ciudades=req.body.nombre_ciudades;
 
   connection.query(
-    `update jugadores SET nombre=?,nacionalidad=?,sejuego=?,edad=?,sexo=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update jugadores SET nombre=?,nacionalidad=?,id_entrenadores=?,edad=?,sexo=?,id_arbitros=?,id_equipos=?,id_torneos=?,id_sanciones=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       nacionalidad,
       id_entrenadores,
       edad,
       sexo,
-      id_abitros,
+      id_arbitros,
       id_equipos,
       id_torneos,
       id_sanciones,

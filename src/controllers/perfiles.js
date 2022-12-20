@@ -26,7 +26,6 @@ function store(req, res) {
   const direccion = data.direccion;
   const celular = data.celular;
   const codigo_postal = data.codigo_postal;
-  const id_usuarios = data.id_usuarios;
   const nombre_paises = data.nombre_paises;
   const nombre_ciudades = data.nombre_ciudades;
 
@@ -42,7 +41,6 @@ function store(req, res) {
         direccion,
         celular,
         codigo_postal,
-        id_usuarios,
         nombre_paises,
         nombre_ciudades
         )
@@ -59,14 +57,15 @@ function store(req, res) {
         direccion,
         celular,
         codigo_postal,
-        id_usuarios,
         nombre_paises,
         nombre_ciudades,
       ],
     ],
     (error, results) => {
       res.send(results);
+      console.log(error)
     }
+
   );
 }
 
@@ -84,12 +83,11 @@ function update(req, res) {
   const direccion = req.body.direccion;
   const celular = req.body.celular;
   const codigo_postal = req.body.codigo_postal;
-  const id_usuarios = req.body.id_usuarios;
   const nombre_paises = req.nombre_paises;
   const nombre_ciudades = req.nombre_ciudades;
 
   connection.query(
-    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,id_usuarios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       apellido,
@@ -101,11 +99,9 @@ function update(req, res) {
       direccion,
       celular,
       codigo_postal,
-      id_usuarios,
       nombre_paises,
       nombre_ciudades,
-      id,
-    ],
+      id],
 
     (error, results) => {
       res.send(results);

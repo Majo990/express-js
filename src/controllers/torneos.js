@@ -32,7 +32,8 @@ function store(req, res) {
         )
     values (?)`,
     [
-      [fecha,
+      [
+        fecha,
       id_estadios,
       nombre,
       nombre_paises,
