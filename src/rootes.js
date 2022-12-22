@@ -28,7 +28,7 @@ const { perfilesController } = require("./controllers/perfiles");
 const { sancionesController } = require("./controllers/sanciones");
 const { torneosController } = require("./controllers/torneos");
 const { premiosController } = require("./controllers/premios");
-const { proximosencuentrosController } = require("./controllers/partidas");
+// const { partidasController } = require("./controllers/partidas");
 
 const { permisos_rolesController } = require("./controllers/permisos_roles");
 
@@ -44,7 +44,7 @@ app.post("/login", controllers.login);
 //router.use(authenticateToken);
 
 app.group("/api", authenticateToken, (router) => {
-  router.get("/user", (req) => req.user);
+  router.get("/user", (req,res) => res.send(req.user));
   //select jugadores
   router.get("/jugadores", jugadoresController.index);
 
@@ -60,12 +60,17 @@ app.group("/api", authenticateToken, (router) => {
   // crud usuaris
 
   //select usuarios
-  /*
-router.get("/partidas", proximosencuentrosController.index);
-router.post("/partidas", proximosencuentrosController.store);
-router.put("/partidas/:id",  proximosencuentrosController.update);
-router.delete("/partidas/:id", proximosencuentrosController.destroy);
-*/
+
+
+  //  router.get("/partidas", partidasController.index);
+  //   router.post("/partidas", partidasController.store);
+  //   router.put("/partidas/:id", partidasController.update);
+  //   router.delete("/partidas/:id", partidasController.destroy);
+
+
+
+
+
 
   //select user
   router.get("/usuarios", usuariosController.index);
@@ -255,8 +260,13 @@ router.delete("/partidas/:id", proximosencuentrosController.destroy);
   //Crud Partidas
 
   router.get("/partidas", partidasController.index);
+// proximos partidas que se jugaran
+  router.get("/proximosencuentros", partidasController.proximosencuentros);
 
-  //router.get("/proximosencuentros", proximosencuentrosController.index);
+  router.get("/juego", partidasController.juego);
+//resultados partidas jugadas ateriormente
+  router.get("resultados",partidasController.resultados);
+
 
   //creando un jugadores
   router.post("/partidas", partidasController.store);

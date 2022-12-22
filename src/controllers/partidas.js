@@ -4,54 +4,127 @@ const { connection } = require("../db");
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
-
-
+  connection.query(
+    `
   select p.*,d.nombre as nombre_deportes, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
   left outer join torneos t
   on t.id=p.id_torneos
   left outer  join rondas r
   on r.id = p.id_rondas
   left outer join deportes d
-  on d.id = p.id_deportes`
+  on d.id = p.id_deportes`,
 
-  , function (err, results) {
-    res.send(results);
-  });
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
-function proximosencuentros(req,res) {
-  // with placeholder
-  index()
-  connection.query(`
+// partidas jugara proximadamene
+function proximosencuentros(req, res) {
+  connection.query(
+    `
 
-  select pj.*, p.*, j.nombre as nombre_jugadores,
-  c.nombre as nombre_cancha from partidas_jugadores pj
-    left outer join partidas p
-    on p.id= pj.id_partidas
-    left outer join jugadores j
-    on j.id = pj.id_jugadores
-    left outer join canchas c
-    on c.id_partidas =p.id;`
-  , function (err, results) {
-    res.send(results);
-  });
+  select
+	pj.*,
+	p.*,
+	j.nombre as nombre_jugadores,
+	c.nombre as nombre_cancha
+from
+	partidas p
+left join partidas_jugadores pj
+    on
+	p.id = pj.id_partidas
+left join jugadores j
+    on
+	j.id = pj.id_jugadores
+left join canchas c
+    on
+	c.id_partidas = p.id
+where
+	convert(concat(p.fecha, ' ', p.tiempo_inicio),
+	datetime) >= now()`,
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
+//resultados partidas jugadas anteriormente
+function resultados(req, res) {
+  connection.query(
+    `
+     select
+	pj.*,
+	p.*,
+	j.nombre as nombre_jugadores,
+	c.nombre as nombre_cancha
+from
+	partidas p
+left join partidas_jugadores pj
+    on
+	p.id = pj.id_partidas
+left join jugadores j
+    on
+	j.id = pj.id_jugadores
+left join canchas c
+    on
+	c.id_partidas = p.id
+where
+	convert(concat(p.fecha, ' ', p.tiempo_inicio),
+	datetime) <= now() `,
+    function (err, results) {
+      res.send(results);
+    }
+  );
+}
+
+// partidas en juego
+
+function juego(req, res) {
+  connection.query(
+    `
+select
+pj.*,
+p.*,
+j.nombre as nombre_jugadores,
+c.nombre as nombre_cancha
+from
+partidas p
+left join partidas_jugadores pj
+  on
+p.id = pj.id_partidas
+left join jugadores j
+  on
+j.id = pj.id_jugadores
+left join canchas c
+  on
+c.id_partidas = p.id
+where
+convert(concat(p.fecha, ' ', p.tiempo_inicio),
+datetime) <= now()  and convert(concat(p.fecha, ' ', p.tiempo_fin),
+datetime) >= now() and fecha=current_date() ;
+
+`,
+    function (err, results) {
+      res.send(results);
+    }
+  );
+}
 
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
-  const descripcion=data.descripcion;
-  const id_torneos=data.id_torneos;
-  const fecha=data.fecha;
-  const tiempo_inicio=data.tiempo_inicio;
-  const tiempo_duracion=data.tiempo_duracion;
-  const tiempo_fin=data.tiempo_fin;
-  const id_rondas=data.id_rondas;
-  const id_deportes=data.id_deportes;
- /*const id_historial_partidas=data.id_historial_partidas;*/
+  const descripcion = data.descripcion;
+  const id_torneos = data.id_torneos;
+  const fecha = data.fecha;
+  const tiempo_inicio = data.tiempo_inicio;
+  const tiempo_duracion = data.tiempo_duracion;
+  const tiempo_fin = data.tiempo_fin;
+  const id_rondas = data.id_rondas;
+  const id_deportes = data.id_deportes;
+  /*const id_historial_partidas=data.id_historial_partidas;*/
 
   connection.query(
     `insert into partidas(
@@ -77,12 +150,12 @@ function store(req, res) {
         tiempo_fin,
         id_rondas,
         id_deportes,
-       /* id_historial_partidas,*/
+        /* id_historial_partidas,*/
       ],
     ],
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
@@ -92,38 +165,45 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
-  const descripcion=req.body.descripcion;
-///  const id_jugadores=req.body.id_jugadores;
-  const id_torneos=req.body.id_torneos;
-  const fecha=req.body.fecha;
-  const tiempo_inicio=req.body.tiempo_inicio;
-  const tiempo_duracion=req.body.tiempo_duracion;
-  const tiempo_fin=req.body.tiempo_fin;
- const  id_rondas= req.body.id_rondas;
- const id_deportes=req.body.id_deportes;
-/* const  id_historial_partidas=req.body.id_historial_partidas;*/
+  const descripcion = req.body.descripcion;
+  ///  const id_jugadores=req.body.id_jugadores;
+  const id_torneos = req.body.id_torneos;
+  const fecha = req.body.fecha;
+  const tiempo_inicio = req.body.tiempo_inicio;
+  const tiempo_duracion = req.body.tiempo_duracion;
+  const tiempo_fin = req.body.tiempo_fin;
+  const id_rondas = req.body.id_rondas;
+  const id_deportes = req.body.id_deportes;
+  /* const  id_historial_partidas=req.body.id_historial_partidas;*/
 
   connection.query(
     `update partidas SET nombre=?,descripcion=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=?,id_deportes=? where id=?;`,
-    [nombre,descripcion,id_torneos,fecha,tiempo_inicio,tiempo_duracion,tiempo_fin,id_rondas,id_deportes,id],
+    [
+      nombre,
+      descripcion,
+      id_torneos,
+      fecha,
+      tiempo_inicio,
+      tiempo_duracion,
+      tiempo_fin,
+      id_rondas,
+      id_deportes,
+      id,
+    ],
 
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(` delete from partidas where id=${id}`,
-  (
-    error,results) => {
-      res.send(results);
-
+  connection.query(` delete from partidas where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 
@@ -132,4 +212,7 @@ module.exports.partidasController = {
   store,
   update,
   destroy,
+  proximosencuentros,
+  resultados,
+  juego,
 };
