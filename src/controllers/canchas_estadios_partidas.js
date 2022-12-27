@@ -10,7 +10,6 @@ function index(req, res) {
   select cep.*,p.nombre as nombre_partidas,e.nombre as nombre_estadios  from canchas_estadios_partidas cep
   left outer join partidas p
   on p.id= cep.id_partidas
-  left outer join estadios e
   ON e.id = cep.id_estadios
  `, function (err, results) {
     res.send(results);
@@ -26,7 +25,7 @@ function store(req, res) {
 
 
   connection.query(
-    `insert into partidas_jugadores(
+    `insert into canchas_estadios_partidas(
         nombre,
       id_partidas,
         id_estadios)
@@ -52,7 +51,7 @@ const nombre= req.body.nombre;
  const  id_partidas= req.body.id_partidas;
  const id_estadios=req.body.id_estadios;
   connection.query(
-    `update partidas_jugadores SET nombre=?,id_partidas=?,id_estadios=? where id=?;`,
+    `update canchas_estadios_partidas SET nombre=?,id_partidas=?,id_estadios=? where id=?;`,
     [nombre,id_partidas,id_estadios,id],
 
     (error,results) => {
@@ -67,7 +66,7 @@ function destroy(req, res) {
 
   const id = req.params.id;
 
-  connection.query(` delete from estadios_partidas where id=${id}`,
+  connection.query(` delete from canchas_estadios_partidas where id=${id}`,
   (
     error,results) => {
       res.send(results);

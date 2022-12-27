@@ -37,7 +37,7 @@ const { paisesController } = require("./controllers/paises");
 
 const { deportesController } = require("./controllers/deportes");
 
-const { estadios_partidasController } = require("./controllers/canchas_estadios_partidas");
+//const { estadios_partidasController } = require("./controllers/estadios_partidas");
 const controllers = require("./controllers");
 
 app.post("/login", controllers.login);
@@ -270,20 +270,20 @@ app.group("/api", authenticateToken, (router) => {
 
 
 //canchas estadios paridas
-  router.get("/estadios_partidas", estadios_partidasController.index);
+ /* router.get("/estadios_partidas",partidasController.index);
 
   //creando un jugadores
-  router.post("/estadios_partidas", estadios_partidasController.store);
+  router.post("/estadios_partidas", partidasController.store);
 
   //actualizando juadores
-  router.put("/estadios_partidas/:id", estadios_partidasController.update);
+  router.put("/estadios_partidas/:id", partidasController.update);
 
   //eliminando un jugador
   router.delete(
     "/estadios_partidas/:id",
-    estadios_partidasController.destroy
+  partidasController.destroy
   );
-
+*/
 
 
   //creando un jugadores
