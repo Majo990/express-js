@@ -21,7 +21,7 @@ function one(req) {
         if (err) {
           reject(err);
         }
-        resolve(results[0]);
+     resolve(results[0]);
       }
     );
   });

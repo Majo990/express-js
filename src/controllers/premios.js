@@ -52,7 +52,7 @@ function update(req, res) {
  const  id_equipos= req.body.id_equipos;
  const id_jugadores=req.body.id_jugadores;
   connection.query(
-    `update premios SET nombre=? ,tipo=?,id_equipos=?,id_jugadores=? where id=?;`,
+    `update premios SET nombre=?,tipo=?,id_equipos=?,id_jugadores=? where id=?;`,
     [nombre,tipo,id_equipos,id_jugadores,id],
 
     (error,results) => {

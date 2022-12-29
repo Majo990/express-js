@@ -1,5 +1,4 @@
 
-
 const { connection } = require("../db");
 
 //select jugadores
@@ -25,7 +24,7 @@ function store(req, res) {
 
 
   connection.query(
-    `insert into canchas_estadios_partidas(
+    `insert into estadios_partidas(
         nombre,
       id_partidas,
         id_estadios)
@@ -51,7 +50,7 @@ const nombre= req.body.nombre;
  const  id_partidas= req.body.id_partidas;
  const id_estadios=req.body.id_estadios;
   connection.query(
-    `update canchas_estadios_partidas SET nombre=?,id_partidas=?,id_estadios=? where id=?;`,
+    `update estadios_partidas SET nombre=?,id_partidas=?,id_estadios=? where id=?;`,
     [nombre,id_partidas,id_estadios,id],
 
     (error,results) => {
@@ -66,7 +65,7 @@ function destroy(req, res) {
 
   const id = req.params.id;
 
-  connection.query(` delete from canchas_estadios_partidas where id=${id}`,
+  connection.query(` delete from estadios_partidas where id=${id}`,
   (
     error,results) => {
       res.send(results);

@@ -188,7 +188,7 @@ function update(req, res) {
       tiempo_fin,
       id_rondas,
       id_deportes,
-      id,
+      id
     ],
 
     (error, results) => {

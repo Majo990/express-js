@@ -83,8 +83,8 @@ function update(req, res) {
   const direccion = req.body.direccion;
   const celular = req.body.celular;
   const codigo_postal = req.body.codigo_postal;
-  const nombre_paises = req.nombre_paises;
-  const nombre_ciudades = req.nombre_ciudades;
+  const nombre_paises = req.body.nombre_paises;
+  const nombre_ciudades = req.body.nombre_ciudades;
 
   connection.query(
     `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
