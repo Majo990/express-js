@@ -6,13 +6,12 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-  select p.*,d.nombre as nombre_deportes, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
-  left outer join torneos t
-  on t.id=p.id_torneos
-  left outer  join rondas r
-  on r.id = p.id_rondas
-  left outer join deportes d
-  on d.id = p.id_deportes`,
+    select p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
+    left outer join torneos t
+    on t.id=p.id_torneos
+    left outer  join rondas r
+    on r.id = p.id_rondas
+        `,
 
     function (err, results) {
       res.send(results);
@@ -23,27 +22,25 @@ function index(req, res) {
 // partidas jugara proximadamene
 function proximosencuentros(req, res) {
   connection.query(
-    `
-
-  select
-	pj.*,
-	p.*,
-	j.nombre as nombre_jugadores,
-	c.nombre as nombre_cancha
-from
-	partidas p
-left join partidas_jugadores pj
-    on
-	p.id = pj.id_partidas
-left join jugadores j
-    on
-	j.id = pj.id_jugadores
-left join canchas c
-    on
-	c.id_partidas = p.id
-where
-	convert(concat(p.fecha, ' ', p.tiempo_inicio),
-	datetime) >= now()`,
+    `select
+    pj.*,
+    p.*,
+    j.nombre as nombre_jugadores,
+    c.nombre as nombre_cancha
+  from
+    partidas p
+  left join partidas_jugadores pj
+      on
+    p.id = pj.id_partidas
+  left join jugadores j
+      on
+    j.id = pj.id_jugadores
+  left join canchas_estadios_partidas c
+      on
+    c.id_partidas = p.id
+  where
+    convert(concat(p.fecha, ' ', p.tiempo_inicio),
+    datetime) >= now()`,
     function (err, results) {
       res.send(results);
     }
@@ -53,27 +50,30 @@ where
 //resultados partidas jugadas anteriormente
 function resultados(req, res) {
   connection.query(
-    `
-     select
-	pj.*,
-	p.*,
-	j.nombre as nombre_jugadores,
-	c.nombre as nombre_cancha
-from
-	partidas p
-left join partidas_jugadores pj
-    on
-	p.id = pj.id_partidas
-left join jugadores j
-    on
-	j.id = pj.id_jugadores
-left join canchas c
-    on
-	c.id_partidas = p.id
-where
-	convert(concat(p.fecha, ' ', p.tiempo_inicio),
-	datetime) <= now() `,
+    `select
+      pj.*,
+      p.*,
+      j.nombre as nombre_jugadores,
+      c.nombre as nombre_cancha
+    from
+      partidas p
+    left join partidas_jugadores pj
+        on
+      p.id = pj.id_partidas
+    left join jugadores j
+        on
+      j.id = pj.id_jugadores
+    left join canchas_estadios_partidas c
+        on
+      c.id_partidas = p.id
+    where
+      convert(concat(p.fecha, ' ', p.tiempo_inicio),
+      datetime) <= now() `,
     function (err, results) {
+      // if(err){
+      //   console.log(err);
+      //   res.send([])
+      // }
       res.send(results);
     }
   );
@@ -84,26 +84,27 @@ where
 function juego(req, res) {
   connection.query(
     `
-select
-pj.*,
-p.*,
-j.nombre as nombre_jugadores,
-c.nombre as nombre_cancha
-from
-partidas p
-left join partidas_jugadores pj
-  on
-p.id = pj.id_partidas
-left join jugadores j
-  on
-j.id = pj.id_jugadores
-left join canchas c
-  on
-c.id_partidas = p.id
-where
-convert(concat(p.fecha, ' ', p.tiempo_inicio),
-datetime) <= now()  and convert(concat(p.fecha, ' ', p.tiempo_fin),
-datetime) >= now() and fecha=current_date() ;
+
+    select
+    pj.*,
+    p.*,
+    j.nombre as nombre_jugadores,
+    c.nombre as nombre_cancha
+    from
+    partidas p
+    left join partidas_jugadores pj
+      on
+    p.id = pj.id_partidas
+    left join jugadores j
+      on
+    j.id = pj.id_jugadores
+    left join canchas_estadios_partidas c
+      on
+    c.id_partidas = p.id
+    where
+    convert(concat(p.fecha, ' ', p.tiempo_inicio),
+    datetime) <= now()  and convert(concat(p.fecha, ' ', p.tiempo_fin),
+    datetime) >= now() and fecha=current_date() ;
 
 `,
     function (err, results) {
@@ -123,7 +124,7 @@ function store(req, res) {
   const tiempo_duracion = data.tiempo_duracion;
   const tiempo_fin = data.tiempo_fin;
   const id_rondas = data.id_rondas;
-  const id_deportes = data.id_deportes;
+  const nombre_deportes = data.nombre_deportes;
   /*const id_historial_partidas=data.id_historial_partidas;*/
 
   connection.query(
@@ -136,7 +137,7 @@ function store(req, res) {
         tiempo_duracion,
         tiempo_fin,
         id_rondas,
-        id_deportes
+          nombre_deportes
          )
     values (?)`,
     [
@@ -149,7 +150,7 @@ function store(req, res) {
         tiempo_duracion,
         tiempo_fin,
         id_rondas,
-        id_deportes,
+        nombre_deportes,
         /* id_historial_partidas,*/
       ],
     ],
@@ -173,11 +174,11 @@ function update(req, res) {
   const tiempo_duracion = req.body.tiempo_duracion;
   const tiempo_fin = req.body.tiempo_fin;
   const id_rondas = req.body.id_rondas;
-  const id_deportes = req.body.id_deportes;
+  const nombre_deportes = req.body.nombre_deportes;
   /* const  id_historial_partidas=req.body.id_historial_partidas;*/
 
   connection.query(
-    `update partidas SET nombre=?,descripcion=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=?,id_deportes=? where id=?;`,
+    `update partidas SET nombre=?,descripcion=?,id_torneos=?,fecha=?,tiempo_inicio=?,tiempo_duracion=?,tiempo_fin=?,id_rondas=?,nombre_deportes=? where id=?;`,
     [
       nombre,
       descripcion,
@@ -187,8 +188,8 @@ function update(req, res) {
       tiempo_duracion,
       tiempo_fin,
       id_rondas,
-      id_deportes,
-      id
+      nombre_deportes,
+      id,
     ],
 
     (error, results) => {

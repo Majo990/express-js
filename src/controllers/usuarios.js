@@ -30,7 +30,7 @@ function one(req) {
 function index(req, res) {
   // with placeholder
   connection.query(
-    `  select u.*,r.descripcionrol  as descripcion_roles from usuarios u
+    `  select u.*,r.descripcion  as descripcion_roles from usuarios u
     left outer join roles r
     on r.id=u.id_roles`,
     function (err, results) {
@@ -66,13 +66,14 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const usuarios = req.body.usuarios;
+  const id_roles=req.body.id_roles;
   connection.query(
     `update usuarios SET usuarios=?,id_roles where id=?;`,
-    [usuarios,id],
+    [usuarios,id_roles,id],
 
     () => {
       res.send("Ok");
-      console.log(error)
+    //  console.log(error)
     }
   );
 }

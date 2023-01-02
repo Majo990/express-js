@@ -5,9 +5,12 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-  select e.*,j.nombre as nombre_jugadores from estadios e
-  left outer join jugadores j
-  on j.id=e.id_jugadores
+    select e.*,j.nombre as nombre_jugadores, cep.nombre as nombre_canchas_estadios_partidas  from estadios e
+    left outer join jugadores j
+    on j.id=e.id_jugadores
+    left outer join canchas_estadios_partidas cep
+    on cep.id=e.id_canchas_estadios_partidas
+
    `,
     function (err, results) {
       res.send(results);
@@ -20,7 +23,7 @@ function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
   const id_jugadores = data.id_jugadores;
-  const cancha = data.cancha;
+  const id_canchas_estadios_partidas= data.id_canchas_estadios_partidas;
   const cesped = data.cesped;
   const administrador = data.administrador;
   const propietario = data.propietario;
@@ -33,7 +36,7 @@ function store(req, res) {
     `insert into estadios(
         nombre,
         id_jugadores,
-        cancha,
+        id_canchas_estadios_partidas,
         cesped,
         administrador,
         propietario,
@@ -46,7 +49,7 @@ function store(req, res) {
       [
         nombre,
         id_jugadores,
-        cancha,
+        id_canchas_estadios_partidas,
         cesped,
         administrador,
         propietario,
@@ -58,6 +61,7 @@ function store(req, res) {
     ],
     (error, results) => {
       res.send(results);
+      console.log(error);
     }
   );
 }
@@ -68,7 +72,7 @@ function update(req, res) {
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
   const id_jugadores = req.body.id_jugadores;
-  const cancha = req.body.cancha;
+  const id_canchas_estadios_partidas = req.body.id_canchas_estadios_partidas;
   const cesped = req.body.cesped;
   const administrador = req.body.administrador;
   const propietario = req.body.propietario;
@@ -78,11 +82,11 @@ function update(req, res) {
   const nombre_ciudades = req.body.nombre_ciudades;
 
   connection.query(
-    `update estadios SET nombre=?,id_jugadores=?,cancha=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update estadios SET nombre=?,id_jugadores=?,id_canchas_estadios_partidas=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       id_jugadores,
-      cancha,
+      id_canchas_estadios_partidas,
       cesped,
       administrador,
       propietario,

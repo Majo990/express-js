@@ -14,12 +14,12 @@ const { entrenadoresController } = require("./controllers/entrenadores");
 const { eventosController } = require("./controllers/eventos");
 const { faltasController } = require("./controllers/faltas");
 const {
-  historial_partidasController,
+  historial_partidasController
 } = require("./controllers/historial_partidas");
 const { juecesController } = require("./controllers/jueces");
 const { partidasController } = require("./controllers/partidas");
 const {
-  partidas_jugadoresController,
+  partidas_jugadoresController
 } = require("./controllers/partidas_jugadores");
 const { rolesController } = require("./controllers/roles");
 const { rondasController } = require("./controllers/rondas");
@@ -37,15 +37,17 @@ const { paisesController } = require("./controllers/paises");
 
 const { deportesController } = require("./controllers/deportes");
 
-//const { estadios_partidasController } = require("./controllers/estadios_partidas");
+const {
+  estadios_partidasController
+} = require("./controllers/canchas_estadios_partidas");
 const controllers = require("./controllers");
 
 app.post("/login", controllers.login);
 
 //router.use(authenticateToken);
-
+// authenticateToken
 app.group("/api", authenticateToken, (router) => {
-  router.get("/user", (req,res) => res.send(req.user));
+  router.get("/user", (req, res) => res.send(req.user));
   //select jugadores
   router.get("/jugadores", jugadoresController.index);
 
@@ -62,16 +64,10 @@ app.group("/api", authenticateToken, (router) => {
 
   //select usuarios
 
-
   //  router.get("/partidas", partidasController.index);
   //   router.post("/partidas", partidasController.store);
   //   router.put("/partidas/:id", partidasController.update);
   //   router.delete("/partidas/:id", partidasController.destroy);
-
-
-
-
-
 
   //select user
   router.get("/usuarios", usuariosController.index);
@@ -261,31 +257,25 @@ app.group("/api", authenticateToken, (router) => {
   //Crud Partidas
 
   router.get("/partidas", partidasController.index);
-// proximos partidas que se jugaran
+  // proximos partidas que se jugaran
   router.get("/proximosencuentros", partidasController.proximosencuentros);
 
   router.get("/juego", partidasController.juego);
-//resultados partidas jugadas ateriormente
-  router.get("/resultados",partidasController.resultados);
+  //resultados partidas jugadas ateriormente
+  router.get("/resultados", partidasController.resultados);
 
-
-//  seleecione canchas estadios paridas
-  router.get("/estadios_partidas",partidasController.index);
+  //  seleecione canchas estadios paridas
+  router.get("/estadios_partidas", estadios_partidasController.index);
 
   //creando estadios partids
-  router.post("/estadios_partidas", partidasController.store);
+  router.post("/estadios_partidas", estadios_partidasController.store);
 
   //actualizando canchas estadios partidas
 
-  router.put("/estadios_partidas/:id", partidasController.update);
+  router.put("/estadios_partidas/:id", estadios_partidasController.update);
 
   //eliminando canchas estadios partidas
-  router.delete(
-    "/estadios_partidas/:id",
-  partidasController.destroy
-  );
-
-
+  router.delete("/estadios_partidas/:id", estadios_partidasController.destroy);
 
   //creando un jugadores
   router.post("/partidas", partidasController.store);

@@ -51,8 +51,11 @@ const nombre_ciudades=data.nombre_ciudades;
       ],
     ],
     (error,results) => {
+      console.log(error);
       res.send(results);
     }
+
+
   );
 }
 

@@ -63,12 +63,11 @@ function store(req, res) {
         id_estadios,
         nombre_paises,
         nombre_ciudades,
-
       ],
     ],
     (error, results) => {
-      res.send(results);
       console.log(error);
+      res.send(results);
     }
   );
 }
@@ -92,7 +91,8 @@ function update(req, res) {
 
   connection.query(
     `update equipos SET nombre=?,fecha_fundo=?,id_jugadores=?,id_entrenadores=?,descripcion=?,simbolo=?,indumentaria_uniforme=?,presidente=?,apodos=?,id_estadios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
-    [nombre,
+    [
+      nombre,
       fecha_fundo,
       id_jugadores,
       id_entrenadores,
@@ -104,11 +104,12 @@ function update(req, res) {
       id_estadios,
       nombre_paises,
       nombre_ciudades,
-      id],
+      id,
+    ],
 
     (error, results) => {
-      res.send(results);
       console.log(error);
+      res.send(results);
     }
   );
 }

@@ -37,6 +37,7 @@ function store(req, res) {
       ],
     ],
     (error,results) => {
+      console.log(error)
       res.send(results);
     }
   );
