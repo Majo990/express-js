@@ -19,6 +19,7 @@ function store(req, res) {
   const nombre = data.nombre;
   const apellido = data.apellido;
   const edad = data.edad;
+  const id_usuarios= data.id_usuarios;
   const sexo = data.sexo;
   const dni = data.dni;
   const nacionalidad = data.nacionalidad;
@@ -34,6 +35,7 @@ function store(req, res) {
         nombre,
         apellido,
         edad,
+        id_usuarios,
         sexo,
         dni,
         nacionalidad,
@@ -50,6 +52,7 @@ function store(req, res) {
         nombre,
         apellido,
         edad,
+        id_usuarios,
         sexo,
         dni,
         nacionalidad,
@@ -76,6 +79,7 @@ function update(req, res) {
   const nombre = req.body.nombre;
   const apellido = req.body.apellido;
   const edad = req.body.edad;
+  const id_usuarios=req.body.id_usuarios;
   const sexo = req.body.sexo;
   const dni = req.body.dni;
   const nacionalidad = req.body.nacionalidad;
@@ -87,11 +91,12 @@ function update(req, res) {
   const nombre_ciudades = req.body.nombre_ciudades;
 
   connection.query(
-    `update perfiles SET nombre=?,apellido=?,edad=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update perfiles SET nombre=?,apellido=?,edad=?,id_usuarios=?,sexo=?,dni=?,nacionalidad=?,email=?,direccion=?,celular=?,codigo_postal=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       apellido,
       edad,
+      id_usuarios,
       sexo,
       dni,
       nacionalidad,

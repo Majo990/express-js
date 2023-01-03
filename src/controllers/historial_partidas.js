@@ -76,6 +76,7 @@ function store(req, res) {
     ],
     (error, results) => {
       res.send(results);
+      console.log(error);
     }
   );
 }
@@ -97,16 +98,7 @@ function update(req, res) {
 
   connection.query(
     `update historial_partidas
-    SET id_jugadores=?
-      , fecha_hora=?
-      ,id_rondas=?
-      ,puntaje=?
-      ,id_eventos=?
-      ,id_jueces=?
-      ,id_premios=?
-      ,id_faltas=?,id_partidas=?
-      ,id_arbitros=?
-    where id=?;`,
+    SET id_jugadores=?,fecha_hora=?,id_rondas=?,puntaje=?,id_eventos=?,id_jueces=?,id_premios=?,id_faltas=?,id_partidas=?,id_arbitros=? where id=?;`,
     [
       id_jugadores,
       fecha_hora,

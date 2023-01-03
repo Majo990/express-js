@@ -70,10 +70,9 @@ function update(req, res) {
   connection.query(
     `update usuarios SET usuarios=?,id_roles where id=?;`,
     [usuarios,id_roles,id],
-
-    () => {
-      res.send("Ok");
-    //  console.log(error)
+    (error, results) => {
+      res.send(results);
+      console.log(error);
     }
   );
 }
