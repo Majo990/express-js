@@ -107,8 +107,9 @@ function juego(req, res) {
     datetime) >= now() and fecha=current_date() ;
 
 `,
-    function (err, results) {
+    function (error, results) {
       res.send(results);
+      console.log(error)
     }
   );
 }

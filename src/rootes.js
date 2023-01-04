@@ -37,8 +37,7 @@ const { paisesController } = require("./controllers/paises");
 
 const { deportesController } = require("./controllers/deportes");
 
-const {
-  estadios_partidasController
+const { estadios_partidasController
 } = require("./controllers/canchas_estadios_partidas");
 const controllers = require("./controllers");
 
@@ -272,7 +271,7 @@ app.group("/api", authenticateToken, (router) => {
 
   //actualizando canchas estadios partidas
 
-  router.put("/estadios_partidas/:id", partidasController.update);
+  router.put("/estadios_partidas/:id",partidasController.update);
 
   //eliminando canchas estadios partidas
   router.delete("/estadios_partidas/:id", partidasController.destroy);
