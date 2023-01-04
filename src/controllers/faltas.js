@@ -63,7 +63,8 @@ function update(req, res) {
  //const id_historial_partidas= req.body.id_historial_partidas;
  const id_partidas=req.body.id_partidas;
   connection.query(
-    `update faltas SET nro=?,fecha_hora=?,id_jugadores=?,id_arbitros=?,id_partidas=? where id=?;`,
+    `update faltas
+     SET nro=?,fecha_hora=?,id_jugadores=?,id_arbitros=?,id_partidas=? where id=?;`,
     [nro,fecha_hora,id_jugadores,id_arbitros,id_partidas,id],
 
     (error,results) => {

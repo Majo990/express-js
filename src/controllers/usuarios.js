@@ -68,7 +68,7 @@ function update(req, res) {
   const usuarios = req.body.usuarios;
   const id_roles=req.body.id_roles;
   connection.query(
-    `update usuarios SET usuarios=?,id_roles where id=?;`,
+    `update usuarios SET usuarios=?,id_roles=? where id=?;`,
     [usuarios,id_roles,id],
     (error, results) => {
       res.send(results);

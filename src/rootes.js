@@ -265,17 +265,17 @@ app.group("/api", authenticateToken, (router) => {
   router.get("/resultados", partidasController.resultados);
 
   //  seleecione canchas estadios paridas
-  router.get("/estadios_partidas", estadios_partidasController.index);
+  router.get("/estadios_partidas", partidasController.index);
 
   //creando estadios partids
-  router.post("/estadios_partidas", estadios_partidasController.store);
+  router.post("/estadios_partidas", partidasController.store);
 
   //actualizando canchas estadios partidas
 
-  router.put("/estadios_partidas/:id", estadios_partidasController.update);
+  router.put("/estadios_partidas/:id", partidasController.update);
 
   //eliminando canchas estadios partidas
-  router.delete("/estadios_partidas/:id", estadios_partidasController.destroy);
+  router.delete("/estadios_partidas/:id", partidasController.destroy);
 
   //creando un jugadores
   router.post("/partidas", partidasController.store);

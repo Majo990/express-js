@@ -5,11 +5,13 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-    select e.*,j.nombre as nombre_jugadores, cep.nombre as nombre_canchas_estadios_partidas  from estadios e
+    select e.*,j.nombre as nombre_jugadores, cep.nombre as nombre_canchas_estadios_partidas, p.nombre as nombre_partidas from estadios e
     left outer join jugadores j
     on j.id=e.id_jugadores
     left outer join canchas_estadios_partidas cep
     on cep.id=e.id_canchas_estadios_partidas
+    left outer join partidas p
+    on p.id=e.id_partidas
 
    `,
     function (err, results) {
@@ -31,6 +33,7 @@ function store(req, res) {
   const direccion = data.direccion;
   const nombre_paises = data.nombre_paises;
   const nombre_ciudades = data.nombre_ciudades;
+  const id_partidas= data.id_partidas;
 
   connection.query(
     `insert into estadios(
@@ -43,7 +46,8 @@ function store(req, res) {
         ubigeo,
         direccion,
         nombre_paises,
-        nombre_ciudades)
+        nombre_ciudades,
+        id_partidas)
     values (?)`,
     [
       [
@@ -57,6 +61,7 @@ function store(req, res) {
         direccion,
         nombre_paises,
         nombre_ciudades,
+        id_partidas,
       ],
     ],
     (error, results) => {
@@ -80,9 +85,10 @@ function update(req, res) {
   const direccion = req.body.direccion;
   const nombre_paises = req.body.nombre_paises;
   const nombre_ciudades = req.body.nombre_ciudades;
+  const id_partidas= req.body.id_partidas;
 
   connection.query(
-    `update estadios SET nombre=?,id_jugadores=?,id_canchas_estadios_partidas=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update estadios SET nombre=?,id_jugadores=?,id_canchas_estadios_partidas=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,nombre_paises=?,nombre_ciudades=?,id_partidas=? where id=?;`,
     [
       nombre,
       id_jugadores,
@@ -94,6 +100,7 @@ function update(req, res) {
       direccion,
       nombre_paises,
       nombre_ciudades,
+      id_partidas,
       id,
     ],
 
