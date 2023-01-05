@@ -41,6 +41,7 @@ function store(req, res) {
   const peso = data.peso;
   const nombre_paises = data.nombre_paises;
   const nombre_ciudades = data.nombre_ciudades;
+  const posicion = data.posicion;
 
   connection.query(
     `insert into jugadores(
@@ -56,7 +57,8 @@ function store(req, res) {
         altura,
         peso,
         nombre_paises,
-        nombre_ciudades
+        nombre_ciudades,
+        posicion
        )
     values (?)`,
     [
@@ -74,6 +76,7 @@ function store(req, res) {
         peso,
         nombre_paises,
         nombre_ciudades,
+        posicion,
 
       ],
     ],
@@ -102,9 +105,10 @@ function update(req, res) {
   const peso=req.body.peso;
   const nombre_paises=req.body.nombre_paises;
   const nombre_ciudades=req.body.nombre_ciudades;
+  const posicion=req.body.posicion;
 
   connection.query(
-    `update jugadores SET nombre=?,nacionalidad=?,id_entrenadores=?,edad=?,sexo=?,id_arbitros=?,id_equipos=?,id_torneos=?,id_sanciones=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update jugadores SET nombre=?,nacionalidad=?,id_entrenadores=?,edad=?,sexo=?,id_arbitros=?,id_equipos=?,id_torneos=?,id_sanciones=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=?,posicion=? where id=?;`,
     [
       nombre,
       nacionalidad,
@@ -119,6 +123,7 @@ function update(req, res) {
       peso,
       nombre_paises,
       nombre_ciudades,
+      posicion,
       id],
 
     () => {

@@ -109,10 +109,45 @@ function juego(req, res) {
 `,
     function (error, results) {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
+
+// equipos su logo de sus equipos
+
+function logo(req, res) {
+  connection.query(
+    `
+    select p.*,e.simbolo  from partidas p
+    left join equipos e
+    on e.simbolo
+`,
+    function (error, results) {
+      res.send(results);
+      console.log(error);
+    }
+  );
+}
+
+/* como sacar un puntaje
+
+function puntaje(req, res){
+
+    `  select p.*, e.nombre as nombre_equipos , j.nombre as nombre_jugador from puntajes p
+    left join equipos e
+    on e.id = p.id_equipo
+    left join jugadores j
+    on j.id = p.id_jugador`,
+
+      function (error, results) {
+      res.send(results);
+      console.log(error);
+    }
+  );
+}
+
+*/
 
 //creando un jugadores
 function store(req, res) {
@@ -217,4 +252,5 @@ module.exports.partidasController = {
   proximosencuentros,
   resultados,
   juego,
+  logo,
 };
