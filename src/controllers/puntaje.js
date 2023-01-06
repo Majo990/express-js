@@ -30,7 +30,7 @@ function store(req, res) {
       id_equipo,
         id_jugador)
     values (?)`,
-    [[puntaje, id_equipo, id_jugador]],
+    [[puntaje,id_equipo,id_jugador],],
     (error, results) => {
       console.log(error);
       res.send(results);
