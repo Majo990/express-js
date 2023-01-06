@@ -149,6 +149,21 @@ function puntaje(req, res){
 
 */
 
+/*
+// es para partidas y equipo perder sale el puntaje
+
+
+   select pj.*,e.nombre as nombre_equipo , p.puntaje  from partidas_jugadores pj
+    left join equipos e
+   on  pj.id  = e.nombre
+   left  join puntajes p
+   on pj.id = p.puntaje
+
+
+
+
+*/
+
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
