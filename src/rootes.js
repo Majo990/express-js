@@ -37,6 +37,9 @@ const { paisesController } = require("./controllers/paises");
 
 const { deportesController } = require("./controllers/deportes");
 
+
+const {puntajeController}= require("./controllers/puntaje");
+
 const {
   estadios_partidasController,
 } = require("./controllers/canchas_estadios_partidas");
@@ -266,7 +269,23 @@ app.group("/api", authenticateToken, (router) => {
   // muestre la img o logo en el home
   router.get("/logo", partidasController.logo);
 
-  
+  // puntaje
+  router.get("/puntaje", puntajeController.index);
+
+  //puntaje
+  router.post("/puntaje", puntajeController.store);
+
+  //puntaje
+
+  router.put("/puntaje/:id", puntajeController.update);
+
+  //puntaje
+  router.delete("/puntaje/:id", puntajeController.destroy);
+
+
+
+
+
   //  seleecione canchas estadios paridas
   router.get("/estadios_partidas", partidasController.index);
 
