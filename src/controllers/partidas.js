@@ -67,7 +67,7 @@ function resultados(req, res) {
         on
       c.id_partidas = p.id
     where
-      convert(concat(p.fecha, ' ', p.tiempo_inicio),
+      convert(concat(p.fecha, ' ', p.tiempo_fin),
       datetime) <= now() `,
     function (err, results) {
       // if(err){
@@ -84,7 +84,6 @@ function resultados(req, res) {
 function juego(req, res) {
   connection.query(
     `
-
     select
     pj.*,
     p.*,
@@ -130,16 +129,11 @@ function logo(req, res) {
   );
 }
 
-/* como sacar un puntaje
-
-function puntaje(req, res){
-
-    `  select p.*, e.nombre as nombre_equipos , j.nombre as nombre_jugador from puntajes p
-    left join equipos e
-    on e.id = p.id_equipo
-    left join jugadores j
-    on j.id = p.id_jugador`,
-
+function puntajes(req, res){
+  connection.query(
+    `  select p.*,p2.puntaje  from partidas p
+    left join puntajes p2
+    on p2.puntaje `,
       function (error, results) {
       res.send(results);
       console.log(error);
@@ -147,7 +141,6 @@ function puntaje(req, res){
   );
 }
 
-*/
 
 /*
 // es para partidas y equipo perder sale el puntaje
@@ -268,4 +261,5 @@ module.exports.partidasController = {
   resultados,
   juego,
   logo,
+  puntajes,
 };

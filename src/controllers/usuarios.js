@@ -12,6 +12,7 @@ function encriptar(password) {
 //select jugadores
 function one(req) {
   const usuario = req.body.usuario;
+  console.log(usuario);
   // with placeholder
   return new Promise((resolve, reject) => {
     connection.query(

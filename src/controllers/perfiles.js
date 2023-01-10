@@ -14,6 +14,20 @@ function index(req, res) {
 }
 
 //creando un jugadores
+
+function user(req, res){
+  connection.query(
+    `select * from perfiles p where id_usuarios = 4 `,
+      function (error, results) {
+      res.send(results);
+      console.log(error);
+    }
+  );
+}
+
+
+
+
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
@@ -129,4 +143,5 @@ module.exports.perfilesController = {
   store,
   update,
   destroy,
+  user,
 };

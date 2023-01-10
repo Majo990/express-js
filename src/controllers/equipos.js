@@ -25,7 +25,7 @@ function store(req, res) {
   const id_jugadores = data.id_jugadores;
   const id_entrenadores = data.id_entrenadores;
   const descripcion = data.descripcion;
-  const simbolo = data.simbolo;
+  const simbolo = req.file.filename;
   const indumentaria_uniforme = data.indumentaria_uniforme;
   const presidente = data.presidente;
   const apodos = data.apodos;
@@ -81,14 +81,13 @@ function update(req, res) {
   const id_jugadores = req.body.id_jugadores;
   const id_entrenadores = req.body.id_entrenadores;
   const descripcion = req.body.descripcion;
-  const simbolo = req.body.simbolo;
+  const simbolo = req.file?.filename || req.body.simbolo;
   const indumentaria_uniforme = req.body.indumentaria_uniforme;
   const presidente = req.body.presidente;
   const apodos = req.body.apodos;
   const id_estadios = req.body.id_estadios;
   const nombre_paises = req.body.nombre_paises;
   const nombre_ciudades = req.body.nombre_ciudades;
-
   connection.query(
     `update equipos SET nombre=?,fecha_fundo=?,id_jugadores=?,id_entrenadores=?,descripcion=?,simbolo=?,indumentaria_uniforme=?,presidente=?,apodos=?,id_estadios=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [

@@ -1,6 +1,37 @@
 require("express-router-group");
 const express = require("express");
 const app = express.Router();
+const multer = require("multer");
+
+const DIR = "./public/img/";
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, fileName);
+  },
+});
+
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+    }
+  },
+});
+
+//const upload = require("../src/static/libs/storage");
 
 const { authenticateToken } = require("./jwt");
 
@@ -37,13 +68,12 @@ const { paisesController } = require("./controllers/paises");
 
 const { deportesController } = require("./controllers/deportes");
 
-
-const {puntajeController}= require("./controllers/puntaje");
+const { puntajeController } = require("./controllers/puntaje");
 
 const {
   estadios_partidasController,
-} = require("./controllers/canchas_estadios_partidas");
-const controllers = require("./controllers");
+} = require("./controllers/estadios_partidas");
+const controllers = require("./controllers/login");
 
 app.post("/login", controllers.login);
 
@@ -181,10 +211,16 @@ app.group("/api", authenticateToken, (router) => {
   router.get("/equipos", equiposController.index);
 
   //creando un jugadores
-  router.post("/equipos", equiposController.store);
+  router.post("/equipos", upload.single("simbolo"), equiposController.store);
+
+  ///upload.single("image")
 
   //actualizando juadores
-  router.put("/equipos/:id", equiposController.update);
+  router.put(
+    "/equipos/:id",
+    upload.single("simbolo"),
+    equiposController.update
+  );
 
   //eliminando un jugador
   router.delete("/equipos/:id", equiposController.destroy);
@@ -268,6 +304,11 @@ app.group("/api", authenticateToken, (router) => {
   router.get("/resultados", partidasController.resultados);
   // muestre la img o logo en el home
   router.get("/logo", partidasController.logo);
+// muestre perfil del usuario
+  router.get("/perfiles", perfilesController.user);
+
+  ///
+  router.get("/puntaje", partidasController.puntajes);
 
   // puntaje
   router.get("/puntaje", puntajeController.index);
@@ -282,22 +323,18 @@ app.group("/api", authenticateToken, (router) => {
   //puntaje
   router.delete("/puntaje/:id", puntajeController.destroy);
 
-
-
-
-
   //  seleecione canchas estadios paridas
-  router.get("/estadios_partidas", partidasController.index);
+  router.get("/estadios_partidas", estadios_partidasController.index);
 
   //creando estadios partids
-  router.post("/estadios_partidas", partidasController.store);
+  router.post("/estadios_partidas", estadios_partidasController.store);
 
   //actualizando canchas estadios partidas
 
-  router.put("/estadios_partidas/:id", partidasController.update);
+  router.put("/estadios_partidas/:id", estadios_partidasController.update);
 
   //eliminando canchas estadios partidas
-  router.delete("/estadios_partidas/:id", partidasController.destroy);
+  router.delete("/estadios_partidas/:id", estadios_partidasController.destroy);
 
   //creando un jugadores
   router.post("/partidas", partidasController.store);
