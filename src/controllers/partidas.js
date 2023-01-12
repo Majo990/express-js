@@ -85,26 +85,32 @@ function juego(req, res) {
   connection.query(
     `
     select
-    pj.*,
     p.*,
-    j.nombre as nombre_jugadores,
-    c.nombre as nombre_cancha
-    from
+    j.id as id_jugador,
+    j.nombre as nombre_jugador,
+    c.id as id_cancha,
+    c.nombre as nombre_cancha,
+    p2.puntaje
+  from
     partidas p
-    left join partidas_jugadores pj
-      on
+  left join partidas_jugadores pj
+        on
     p.id = pj.id_partidas
-    left join jugadores j
-      on
+  left join jugadores j
+        on
     j.id = pj.id_jugadores
-    left join canchas_estadios_partidas c
-      on
+  left join canchas_estadios_partidas c
+        on
     c.id_partidas = p.id
-    where
+  left join puntajes p2
+      on
+    p2.id_partidas = p.id
+    and p2.id_jugadores= pj.id_jugadores
+  where
     convert(concat(p.fecha, ' ', p.tiempo_inicio),
-    datetime) <= now()  and convert(concat(p.fecha, ' ', p.tiempo_fin),
-    datetime) >= now() and fecha=current_date() ;
-
+    datetime) <= now()
+    and p.tiempo_fin is null
+    and fecha = current_date() limit 4;
 `,
     function (error, results) {
       res.send(results);
@@ -129,7 +135,7 @@ function logo(req, res) {
   );
 }
 
-function puntajes(req, res){
+/*function puntajes(req, res){
   connection.query(
     `  select p.*,p2.puntaje  from partidas p
     left join puntajes p2
@@ -139,8 +145,7 @@ function puntajes(req, res){
       console.log(error);
     }
   );
-}
-
+}*/
 
 /*
 // es para partidas y equipo perder sale el puntaje
@@ -165,8 +170,8 @@ function store(req, res) {
   const id_torneos = data.id_torneos;
   const fecha = data.fecha;
   const tiempo_inicio = data.tiempo_inicio;
-  const tiempo_duracion = data.tiempo_duracion;
-  const tiempo_fin = data.tiempo_fin;
+  ///const tiempo_duracion = data.tiempo_duracion;
+  ///const tiempo_fin = data.tiempo_fin;
   const id_rondas = data.id_rondas;
   const nombre_deportes = data.nombre_deportes;
   /*const id_historial_partidas=data.id_historial_partidas;*/
@@ -178,8 +183,6 @@ function store(req, res) {
         id_torneos,
         fecha,
         tiempo_inicio,
-        tiempo_duracion,
-        tiempo_fin,
         id_rondas,
           nombre_deportes
          )
@@ -191,8 +194,8 @@ function store(req, res) {
         id_torneos,
         fecha,
         tiempo_inicio,
-        tiempo_duracion,
-        tiempo_fin,
+        //tiempo_duracion,
+        //tiempo_fin,
         id_rondas,
         nombre_deportes,
         /* id_historial_partidas,*/
@@ -261,5 +264,4 @@ module.exports.partidasController = {
   resultados,
   juego,
   logo,
-  puntajes,
 };

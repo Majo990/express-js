@@ -15,25 +15,27 @@ function index(req, res) {
 
 //creando un jugadores
 
-function user(req, res){
-  connection.query(
-    `select * from perfiles p where id_usuarios = 4 `,
-      function (error, results) {
-      res.send(results);
-      console.log(error);
-    }
-  );
+function user(req) {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `select * from perfiles p where id_usuarios =
+    '${req.user.id}'`,
+      function (err, results) {
+        if (err) {
+          reject(err);
+        }
+        resolve(results[0]);
+      }
+    );
+  });
 }
-
-
-
 
 function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
   const apellido = data.apellido;
   const edad = data.edad;
-  const id_usuarios= data.id_usuarios;
+  const id_usuarios = data.id_usuarios;
   const sexo = data.sexo;
   const dni = data.dni;
   const nacionalidad = data.nacionalidad;
@@ -80,9 +82,8 @@ function store(req, res) {
     ],
     (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
-
   );
 }
 
@@ -93,7 +94,7 @@ function update(req, res) {
   const nombre = req.body.nombre;
   const apellido = req.body.apellido;
   const edad = req.body.edad;
-  const id_usuarios=req.body.id_usuarios;
+  const id_usuarios = req.body.id_usuarios;
   const sexo = req.body.sexo;
   const dni = req.body.dni;
   const nacionalidad = req.body.nacionalidad;
@@ -120,7 +121,8 @@ function update(req, res) {
       codigo_postal,
       nombre_paises,
       nombre_ciudades,
-      id],
+      id,
+    ],
 
     (error, results) => {
       res.send(results);

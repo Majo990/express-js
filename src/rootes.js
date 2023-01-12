@@ -295,7 +295,7 @@ app.group("/api", authenticateToken, (router) => {
 
   //Crud Partidas
 
-  router.get("/partidas", partidasController.index);
+
   // proximos partidas que se jugaran
   router.get("/proximosencuentros", partidasController.proximosencuentros);
 
@@ -305,10 +305,13 @@ app.group("/api", authenticateToken, (router) => {
   // muestre la img o logo en el home
   router.get("/logo", partidasController.logo);
 // muestre perfil del usuario
-  router.get("/perfiles", perfilesController.user);
+
+
+
+ // router.get("/user", perfilesController.user);
 
   ///
-  router.get("/puntaje", partidasController.puntajes);
+  ///router.get("/puntaje", partidasController.puntajes);
 
   // puntaje
   router.get("/puntaje", puntajeController.index);
@@ -337,6 +340,7 @@ app.group("/api", authenticateToken, (router) => {
   router.delete("/estadios_partidas/:id", estadios_partidasController.destroy);
 
   //creando un jugadores
+  router.get("/partidas", partidasController.index);
   router.post("/partidas", partidasController.store);
 
   //actualizando juadores
