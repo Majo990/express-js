@@ -10,7 +10,7 @@ function index(req, res) {
     left outer join torneos t
     on t.id=p.id_torneos
     left outer  join rondas r
-    on r.id = p.id_rondas
+    on r.id = p.id_rondas 
         `,
 
     function (err, results) {
@@ -40,7 +40,7 @@ function proximosencuentros(req, res) {
     c.id_partidas = p.id
   where
     convert(concat(p.fecha, ' ', p.tiempo_inicio),
-    datetime) >= now()`,
+    datetime) >= now()  `,
     function (err, results) {
       res.send(results);
     }
@@ -170,8 +170,8 @@ function store(req, res) {
   const id_torneos = data.id_torneos;
   const fecha = data.fecha;
   const tiempo_inicio = data.tiempo_inicio;
-  ///const tiempo_duracion = data.tiempo_duracion;
-  ///const tiempo_fin = data.tiempo_fin;
+ const tiempo_duracion = data.tiempo_duracion;
+  const tiempo_fin = data.tiempo_fin;
   const id_rondas = data.id_rondas;
   const nombre_deportes = data.nombre_deportes;
   /*const id_historial_partidas=data.id_historial_partidas;*/
@@ -183,6 +183,8 @@ function store(req, res) {
         id_torneos,
         fecha,
         tiempo_inicio,
+        tiempo_duracion,
+        tiempo_fin,
         id_rondas,
           nombre_deportes
          )
@@ -193,9 +195,9 @@ function store(req, res) {
         descripcion,
         id_torneos,
         fecha,
-        tiempo_inicio,
-        //tiempo_duracion,
-        //tiempo_fin,
+       tiempo_inicio,
+       tiempo_duracion,
+        tiempo_fin,
         id_rondas,
         nombre_deportes,
         /* id_historial_partidas,*/

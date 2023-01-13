@@ -4,15 +4,13 @@ const { connection } = require("../db");
 function index(req, res) {
   // with placeholder
   connection.query(
-    ` select pj.id_partidas, e.*,j.nombre as nombre_jugadores,e2.nombre as nombre_entrendores , e3.nombre as nombre_estadios from equipos e
+    `    select e.*,j.nombre as nombre_jugadores,e2.nombre as nombre_entrendores , e3.nombre as nombre_estadios from equipos e
     left outer join jugadores j
     on j.id=e.id_jugadores
     left outer join entrenadores e2
     on e2.id =e.id_entrenadores
     left outer join estadios e3
     on e3.id= e.id_estadios
-    left outer join partidas_jugadores pj
-    on pj.id_jugadores =j.id ;
     `,
     function (err, results) {
       res.send(results);

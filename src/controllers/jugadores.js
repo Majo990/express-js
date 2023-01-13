@@ -6,18 +6,22 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-  select  j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
-  t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
-  left outer join entrenadores e
-  on e.id=j.id_entrenadores
-  left outer join arbitros a
-  on a.id =j.id_arbitros
-  left outer join equipos e2
-  on e2.id= j.id_equipos
-  left outer join torneos t
-  on t.id=j.id_torneos
-  left outer join sanciones s
-  on s.id =j.id_sanciones
+
+    select pj.id_partidas , j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
+    t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
+    left outer join entrenadores e
+    on e.id=j.id_entrenadores
+    left outer join arbitros a
+    on a.id =j.id_arbitros
+    left outer join equipos e2
+    on e2.id= j.id_equipos
+    left outer join torneos t
+    on t.id=j.id_torneos
+    left outer join sanciones s
+    on s.id =j.id_sanciones
+    left outer join partidas_jugadores pj
+    on pj.id_jugadores = j.id
+  
   `,
     function (err, results) {
       res.send(results);

@@ -129,7 +129,7 @@ app.group("/api", authenticateToken, (router) => {
 
   //Crud permisos
 
-  router.get("/permisos", permisosController.index);
+      router.get("/permisos", permisosController.index);
 
   //creando un permi
   router.post("/permisos", permisosController.store);
@@ -142,7 +142,7 @@ app.group("/api", authenticateToken, (router) => {
 
   //Crud perfiles
 
-  router.get("/perfiles", perfilesController.index);
+  router.get("/perfiles", perfilesController.user);
 
   //creando un permi
   router.post("/perfiles", perfilesController.store);
@@ -308,7 +308,7 @@ app.group("/api", authenticateToken, (router) => {
 
 
 
- // router.get("/user", perfilesController.user);
+  router.get("/user", perfilesController.user);
 
   ///
   ///router.get("/puntaje", partidasController.puntajes);
