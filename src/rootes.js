@@ -95,6 +95,9 @@ app.group("/api", authenticateToken, (router) => {
 
   // crud usuaris
 
+
+ router.get("/partidajugador", jugadoresController.partidajugador);
+ router.get("puntaje", puntajeController.puntaje);
   //select usuarios
 
   //  router.get("/partidas", partidasController.index);

@@ -10,8 +10,7 @@ function index(req, res) {
     left outer join torneos t
     on t.id=p.id_torneos
     left outer  join rondas r
-    on r.id = p.id_rondas
-        `,
+    on r.id = p.id_rondas `,
 
     function (err, results) {
       res.send(results);

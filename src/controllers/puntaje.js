@@ -10,11 +10,27 @@ function index(req, res) {
     on p.id= p2.id_partidas
     left outer join jugadores j
     on j.id = p2.id_jugadores
-  
-
  `,
     function (err, results) {
       res.send(results);
+    }
+  );
+}
+
+function puntaje(req, res) {
+  connection.query(
+    `
+    select p.*,pj.id_partidas as nombre_partidas,j.nombre as nombre_jugadores from puntajes p
+    left outer join partidas_jugadores pj
+    on p.id= pj.id_partidas
+    left outer join jugadores j
+    on j.id= p.id_jugadores
+    group  by id_partidas
+
+`,
+    function (error, results) {
+      res.send(results);
+      console.log(error);
     }
   );
 }
@@ -53,7 +69,7 @@ function update(req, res) {
   const id_partidas = req.body.id_partidas;
   connection.query(
     `update puntajes SET puntaje=?,id_jugadores=?,id_partidas=? where id=?;`,
-    [puntaje,id_jugadores,id_partidas,id],
+    [puntaje, id_jugadores, id_partidas, id],
     (error, results) => {
       res.send(results);
       console.log(error);
@@ -76,8 +92,8 @@ module.exports.puntajeController = {
   store,
   update,
   destroy,
+  puntaje,
 };
-
 
 /*
 

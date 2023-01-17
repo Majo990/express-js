@@ -13,7 +13,7 @@ function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
   const apellido = data.apellido;
-  const edad = data.edad;
+ // const edad = data.edad;
   const sexo = data.sexo;
   const altura = data.altura;
   const peso = data.peso;
@@ -25,7 +25,6 @@ function store(req, res) {
     `insert into arbitros(
         nombre,
         apellido,
-        edad,
         sexo,
         altura,
         peso,
@@ -38,7 +37,7 @@ function store(req, res) {
       [
         nombre,
         apellido,
-        edad,
+      //  edad,
         sexo,
         altura,
         peso,
@@ -60,7 +59,7 @@ function update(req, res) {
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const nombre = req.body.nombre;
   const apellido = req.body.apellido;
-  const edad = req.body.edad;
+  //const edad = req.body.edad;
   const sexo = req.body.sexo;
   const altura = req.body.altura;
   const peso = req.body.peso;
@@ -69,11 +68,11 @@ function update(req, res) {
   const nombre_ciudades = req.body.nombre_ciudades;
 
   connection.query(
-    `update arbitros SET nombre=?,apellido=?,edad=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
+    `update arbitros SET nombre=?,apellido=?,sexo=?,altura=?,peso=?,fecha_nacimiento=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
     [
       nombre,
       apellido,
-      edad,
+     // edad,
       sexo,
       altura,
       peso,
