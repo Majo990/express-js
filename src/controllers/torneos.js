@@ -31,23 +31,12 @@ function store(req, res) {
         nombre_ciudades
         )
     values (?)`,
-    [
-      [
-        fecha,
-      id_estadios,
-      nombre,
-      nombre_paises,
-      nombre_ciudades,
-
-    ],
-  ],
+    [[fecha, id_estadios, nombre, nombre_paises, nombre_ciudades]],
     (error, results) => {
       res.send(results);
     }
-
   );
 }
-
 
 //actualizando juadores
 function update(req, res) {
@@ -60,7 +49,7 @@ function update(req, res) {
   const nombre_ciudades = req.body.nombre_ciudades;
   connection.query(
     `update torneos SET fecha=?,id_estadios=?,nombre=?,nombre_paises=?,nombre_ciudades=? where id=?;`,
-    [fecha,id_estadios,nombre,nombre_paises,nombre_ciudades,id],
+    [fecha, id_estadios, nombre, nombre_paises, nombre_ciudades, id],
 
     (error, results) => {
       res.send(results);

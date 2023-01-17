@@ -129,7 +129,7 @@ app.group("/api", authenticateToken, (router) => {
 
   //Crud permisos
 
-      router.get("/permisos", permisosController.index);
+  router.get("/permisos", permisosController.index);
 
   //creando un permi
   router.post("/permisos", permisosController.store);
@@ -295,7 +295,6 @@ app.group("/api", authenticateToken, (router) => {
 
   //Crud Partidas
 
-
   // proximos partidas que se jugaran
   router.get("/proximosencuentros", partidasController.proximosencuentros);
 
@@ -304,9 +303,7 @@ app.group("/api", authenticateToken, (router) => {
   router.get("/resultados", partidasController.resultados);
   // muestre la img o logo en el home
   router.get("/logo", partidasController.logo);
-// muestre perfil del usuario
-
-
+  // muestre perfil del usuario
 
   router.get("/user", perfilesController.user);
 

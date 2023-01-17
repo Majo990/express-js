@@ -52,8 +52,7 @@ function update(req, res) {
       res.send(results);
       console.log(error);
     }
-);
-
+  );
 }
 
 //eliminando un jugador

@@ -5,12 +5,12 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-    select p.*,pj.id_partidas as nombre_partidas,j.nombre as nombre_jugadores from puntajes p
-    left outer join partidas_jugadores pj
-    on p.id= pj.id_partidas
+    select p2.*, p.nombre as nombre_partidas, j.nombre as nombre_jugadores  from puntajes p2
+    left outer join partidas p
+    on p.id= p2.id_partidas
     left outer join jugadores j
-    on j.id= p.id_jugadores
-    group  by id_partidas
+    on j.id = p2.id_jugadores
+  
 
  `,
     function (err, results) {
@@ -34,13 +34,12 @@ function store(req, res) {
       id_jugadores
             )
     values (?)`,
-    [[puntaje, id_partidas, id_jugadores],],
+    [[puntaje, id_partidas, id_jugadores]],
 
     (error, results) => {
       console.log(error);
       res.send(results);
     }
-
   );
 }
 
@@ -78,3 +77,16 @@ module.exports.puntajeController = {
   update,
   destroy,
 };
+
+
+/*
+
+//comentario select
+  select p.*,pj.id_partidas as nombre_partidas,j.nombre as nombre_jugadores from puntajes p
+    left outer join partidas_jugadores pj
+    on p.id= pj.id_partidas
+    left outer join jugadores j
+    on j.id= p.id_jugadores
+    group  by id_partidas
+
+*/

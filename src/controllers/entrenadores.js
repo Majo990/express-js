@@ -18,8 +18,8 @@ on j.id=e.id_jugadores
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const nombre =data.nombre;
-  const id_jugadores =data.id_jugadores;
+  const nombre = data.nombre;
+  const id_jugadores = data.id_jugadores;
   const apellido = data.apellido;
   const edad = data.edad;
   const sexo = data.sexo;
@@ -49,7 +49,6 @@ function store(req, res) {
         fecha_nacimiento,
         nombre_paises,
         nombre_ciudades,
-
       ],
     ],
     (error, results) => {
@@ -83,7 +82,7 @@ function update(req, res) {
       fecha_nacimiento,
       nombre_paises,
       nombre_ciudades,
-      id
+      id,
     ],
 
     (error, results) => {

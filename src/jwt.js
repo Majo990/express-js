@@ -1,7 +1,7 @@
-   const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 function generateAccessToken(user) {
-  delete user.contrasenia
+  delete user.contrasenia;
   return jwt.sign(user, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
 
@@ -23,5 +23,3 @@ module.exports = {
   generateAccessToken,
   authenticateToken,
 };
-
-

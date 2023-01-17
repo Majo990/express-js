@@ -1,4 +1,3 @@
-
 const { connection } = require("../db");
 
 //select jugadores
@@ -16,14 +15,10 @@ function store(req, res) {
 
   connection.query(
     `insert into rondas(
-        nro) 
+        nro)
     values (?)`,
-    [
-      [
-        nro,
-      ],
-    ],
-    (error,results) => {
+    [[nro]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -36,25 +31,21 @@ function update(req, res) {
   const nro = req.body.nro;
   connection.query(
     `update rondas SET nro=?  where id=?;`,
-    [nro,id],
+    [nro, id],
 
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-  
   const id = req.params.id;
 
-  connection.query(` delete from rondas where id=${id}`, 
-  (
-    error,results) => {
-      res.send(results);
-  
+  connection.query(` delete from rondas where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 

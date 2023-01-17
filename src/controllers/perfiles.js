@@ -15,17 +15,15 @@ function index(req, res) {
 
 //creando un jugadores
 
-function user(req,res) {
- // return new Promise((resolve, reject) => {
-    connection.query(
-      `select * from perfiles p where id_usuarios =
+function user(req, res) {
+  // return new Promise((resolve, reject) => {
+  connection.query(
+    `select * from perfiles p where id_usuarios =
     '${req.user.id}'`,
-      function (err, results) {
-
-        res.send(results);
-      }
-    );
-
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
 function store(req, res) {

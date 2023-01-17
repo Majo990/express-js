@@ -10,7 +10,7 @@ function index(req, res) {
     left outer join torneos t
     on t.id=p.id_torneos
     left outer  join rondas r
-    on r.id = p.id_rondas 
+    on r.id = p.id_rondas
         `,
 
     function (err, results) {
@@ -110,7 +110,7 @@ function juego(req, res) {
     convert(concat(p.fecha, ' ', p.tiempo_inicio),
     datetime) <= now()
     and p.tiempo_fin is null
-    and fecha = current_date() limit 4;
+    and fecha = current_date() limit 8;
 `,
     function (error, results) {
       res.send(results);
@@ -170,7 +170,7 @@ function store(req, res) {
   const id_torneos = data.id_torneos;
   const fecha = data.fecha;
   const tiempo_inicio = data.tiempo_inicio;
- const tiempo_duracion = data.tiempo_duracion;
+  const tiempo_duracion = data.tiempo_duracion;
   const tiempo_fin = data.tiempo_fin;
   const id_rondas = data.id_rondas;
   const nombre_deportes = data.nombre_deportes;
@@ -195,8 +195,8 @@ function store(req, res) {
         descripcion,
         id_torneos,
         fecha,
-       tiempo_inicio,
-       tiempo_duracion,
+        tiempo_inicio,
+        tiempo_duracion,
         tiempo_fin,
         id_rondas,
         nombre_deportes,

@@ -30,7 +30,7 @@ function store(req, res) {
       id_partidas,
         id_estadios)
     values (?)`,
-    [[nombre,id_partidas,id_estadios]],
+    [[nombre, id_partidas, id_estadios]],
     (error, results) => {
       console.log(error);
       res.send(results);
@@ -47,7 +47,7 @@ function update(req, res) {
   const id_estadios = req.body.id_estadios;
   connection.query(
     `update canchas_estadios_partidas  SET nombre=?,id_partidas=?,id_estadios=? where id=?;`,
-    [nombre,id_partidas,id_estadios,id],
+    [nombre, id_partidas, id_estadios, id],
 
     (error, results) => {
       res.send(results);

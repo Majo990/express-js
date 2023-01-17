@@ -5,4 +5,3 @@ module.exports.connection = mysql.createConnection({
   user: "root",
   database: "prue",
 });
-

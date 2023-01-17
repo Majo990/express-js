@@ -6,8 +6,7 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-
-    select pj.id_partidas , j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
+    select j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
     t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
     left outer join entrenadores e
     on e.id=j.id_entrenadores
@@ -19,9 +18,7 @@ function index(req, res) {
     on t.id=j.id_torneos
     left outer join sanciones s
     on s.id =j.id_sanciones
-    left outer join partidas_jugadores pj
-    on pj.id_jugadores = j.id
-  
+
   `,
     function (err, results) {
       res.send(results);
@@ -81,12 +78,11 @@ function store(req, res) {
         nombre_paises,
         nombre_ciudades,
         posicion,
-
       ],
     ],
     (error) => {
       res.send("Ok");
-      console.log(error)
+      console.log(error);
     }
   );
 }
@@ -95,21 +91,21 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-  const nombre =req.body.nombre;
-  const nacionalidad =req.body.nacionalidad;
-  const id_entrenadores =req.body.id_entrenadores;
+  const nombre = req.body.nombre;
+  const nacionalidad = req.body.nacionalidad;
+  const id_entrenadores = req.body.id_entrenadores;
   //  const sejuego=req.body.sejuego; puntaje
-  const edad= req.body.edad;
-  const sexo= req.body.sexo;
-  const id_arbitros=req.body.id_arbitros;
-  const id_equipos=req.body.id_equipos;
-  const id_torneos=req.body.id_torneos;
-  const id_sanciones= req.body.id_sanciones;
-  const altura=req.body.altura;
-  const peso=req.body.peso;
-  const nombre_paises=req.body.nombre_paises;
-  const nombre_ciudades=req.body.nombre_ciudades;
-  const posicion=req.body.posicion;
+  const edad = req.body.edad;
+  const sexo = req.body.sexo;
+  const id_arbitros = req.body.id_arbitros;
+  const id_equipos = req.body.id_equipos;
+  const id_torneos = req.body.id_torneos;
+  const id_sanciones = req.body.id_sanciones;
+  const altura = req.body.altura;
+  const peso = req.body.peso;
+  const nombre_paises = req.body.nombre_paises;
+  const nombre_ciudades = req.body.nombre_ciudades;
+  const posicion = req.body.posicion;
 
   connection.query(
     `update jugadores SET nombre=?,nacionalidad=?,id_entrenadores=?,edad=?,sexo=?,id_arbitros=?,id_equipos=?,id_torneos=?,id_sanciones=?,altura=?,peso=?,nombre_paises=?,nombre_ciudades=?,posicion=? where id=?;`,
@@ -128,7 +124,8 @@ function update(req, res) {
       nombre_paises,
       nombre_ciudades,
       posicion,
-      id],
+      id,
+    ],
 
     () => {
       res.send("Ok");
@@ -151,3 +148,25 @@ module.exports.jugadoresController = {
   update,
   destroy,
 };
+
+
+/*
+
+codigo select
+
+ select pj.id_partidas , j.*,e.nombre as nombre_entrenadores , a.nombre as nombre_arbitros, e2.nombre as nombre_equipos,
+    t.nombre as nombre_torneos,s.nombre as nombre_sanciones from jugadores j
+    left outer join entrenadores e
+    on e.id=j.id_entrenadores
+    left outer join arbitros a
+    on a.id =j.id_arbitros
+    left outer join equipos e2
+    on e2.id= j.id_equipos
+    left outer join torneos t
+    on t.id=j.id_torneos
+    left outer join sanciones s
+    on s.id =j.id_sanciones
+    left outer join partidas_jugadores pj
+    on pj.id_jugadores = j.id
+
+*/

@@ -1,4 +1,3 @@
-
 const { connection } = require("../db");
 
 //select jugadores
@@ -16,15 +15,10 @@ function store(req, res) {
 
   connection.query(
     `insert into sanciones(
-        nombre) 
+        nombre)
     values (?)`,
-    [
-      [
-        nombre,
-        
-      ],
-    ],
-    (error,results) => {
+    [[nombre]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -38,26 +32,25 @@ function update(req, res) {
 
   connection.query(
     `update sanciones SET nombre=? where id=?;`,
-    [nombre,id],
+    [nombre, id],
 
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-  
   const id = req.params.id;
 
-  connection.query(` delete from sanciones where id=${id}`, 
-  (
-    error,results) => {
+  connection.query(
+    ` delete from sanciones where id=${id}`,
+    (error, results) => {
       res.send(results);
-  
-  });
+    }
+  );
 }
 
 module.exports.sancionesController = {

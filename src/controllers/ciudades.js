@@ -1,4 +1,3 @@
-
 const { connection } = require("../db");
 
 //select jugadores
@@ -25,12 +24,8 @@ function store(req, res) {
     `insert into arbitros(
         nombre)
     values (?)`,
-    [
-      [
-        nombre,
-      ],
-    ],
-    (error,results) => {
+    [[nombre]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -40,28 +35,24 @@ function store(req, res) {
 function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
-const nombre = req.body.nombre;
+  const nombre = req.body.nombre;
 
   connection.query(
     `update arbitros SET nombre=? where id=?;`,
-    [nombre,id],
-    (error,results) => {
+    [nombre, id],
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(`delete from arbitros where id=${id}`,
-  (
-    error,results) => {
-      res.send(results);
-
+  connection.query(`delete from arbitros where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 

@@ -39,7 +39,7 @@ function update(req, res) {
   const descripcion = req.body.descripcion;
   connection.query(
     `update roles SET descripcion=? where id=?;`,
-    [descripcion,id],
+    [descripcion, id],
 
     (error, results) => {
       res.send(results);

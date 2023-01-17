@@ -22,7 +22,7 @@ function one(req) {
         if (err) {
           reject(err);
         }
-     resolve(results[0]);
+        resolve(results[0]);
       }
     );
   });
@@ -57,7 +57,7 @@ function store(req, res) {
     [[usuarios, encriptar(contrasenia), id_roles]],
     (error) => {
       res.send("Ok");
-      console.log(error)
+      console.log(error);
     }
   );
 }
@@ -67,10 +67,10 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
   const usuarios = req.body.usuarios;
-  const id_roles=req.body.id_roles;
+  const id_roles = req.body.id_roles;
   connection.query(
     `update usuarios SET usuarios=?,id_roles=? where id=?;`,
-    [usuarios,id_roles,id],
+    [usuarios, id_roles, id],
     (error, results) => {
       res.send(results);
       console.log(error);
@@ -84,7 +84,7 @@ function destroy(req, res) {
 
   connection.query(` delete from usuarios where id=${id}`, () => {
     res.send("Ok");
-    console.log(error)
+    console.log(error);
   });
 }
 

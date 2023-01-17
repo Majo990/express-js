@@ -1,4 +1,3 @@
-
 const { connection } = require("../db");
 
 //select jugadores
@@ -18,12 +17,8 @@ function store(req, res) {
     `insert into eventos(
         nombre)
     values (?)`,
-    [
-      [
-        nombre,
-      ],
-    ],
-    (error,results) => {
+    [[nombre]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -37,25 +32,21 @@ function update(req, res) {
 
   connection.query(
     `update eventos SET nombre=?  where id=?;`,
-    [nombre,id],
+    [nombre, id],
 
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(` delete from eventos where id=${id}`,
-  (
-    error,results) => {
-      res.send(results);
-
+  connection.query(` delete from eventos where id=${id}`, (error, results) => {
+    res.send(results);
   });
 }
 

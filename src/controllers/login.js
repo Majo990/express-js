@@ -6,12 +6,12 @@ async function login(req, res) {
   const password = req.body.password;
 
   const user = await usuariosController.one(req);
-  if ( user && usuariosController.encriptar(password)===user.contrasenia) {
+  if (user && usuariosController.encriptar(password) === user.contrasenia) {
     const token = generateAccessToken(user);
-    res.json({user,token});
+    res.json({ user, token });
     return;
   }
-  res.sendStatus(401)
+  res.sendStatus(401);
 }
 
 module.exports = {

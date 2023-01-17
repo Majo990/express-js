@@ -1,5 +1,3 @@
-
-
 export const paises = [
   "Afghanistan",
   "Albania",
@@ -193,4 +191,3 @@ export const paises = [
   "Zambia",
   "Zimbabwe",
 ];
-

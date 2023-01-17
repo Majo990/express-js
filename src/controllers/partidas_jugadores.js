@@ -1,40 +1,35 @@
-
-
 const { connection } = require("../db");
 
 //select jugadores
 function index(req, res) {
   // with placeholder
-  connection.query(`
+  connection.query(
+    `
   select pj.*, p.nombre as nombre_partidas, j.nombre as nombre_jugadores  from partidas_jugadores pj
   left outer join partidas p
   on p.id= pj.id_partidas
   left outer join jugadores j
   on j.id = pj.id_jugadores
- `, function (err, results) {
-    res.send(results);
-  });
+ `,
+    function (err, results) {
+      res.send(results);
+    }
+  );
 }
 
 //creando un jugadores
 function store(req, res) {
   const data = req.body;
-  const id_partidas=data.id_partidas;
+  const id_partidas = data.id_partidas;
   const id_jugadores = data.id_jugadores;
-
 
   connection.query(
     `insert into partidas_jugadores(
         id_partidas,
         id_jugadores)
     values (?)`,
-    [
-      [
-        id_partidas,
-        id_jugadores,
-      ],
-    ],
-    (error,results) => {
+    [[id_partidas, id_jugadores]],
+    (error, results) => {
       res.send(results);
     }
   );
@@ -45,30 +40,29 @@ function update(req, res) {
   const id = req.params.id;
   //const { nombre, nacionalidad, sejuego, nombre_torneos, edad, sexo } = req.body;
 
- const  id_partidas= req.body.id_partidas;
- const id_jugadores=req.body.id_jugadores;
+  const id_partidas = req.body.id_partidas;
+  const id_jugadores = req.body.id_jugadores;
   connection.query(
     `update partidas_jugadores SET id_partidas=?,id_jugadores=? where id=?;`,
-    [id_partidas,id_jugadores,id],
+    [id_partidas, id_jugadores, id],
 
-    (error,results) => {
+    (error, results) => {
       res.send(results);
-      console.log(error)
+      console.log(error);
     }
   );
 }
 
 //eliminando un jugador
 function destroy(req, res) {
-
   const id = req.params.id;
 
-  connection.query(` delete from partidas_jugadores where id=${id}`,
-  (
-    error,results) => {
+  connection.query(
+    ` delete from partidas_jugadores where id=${id}`,
+    (error, results) => {
       res.send(results);
-
-  });
+    }
+  );
 }
 
 module.exports.partidas_jugadoresController = {

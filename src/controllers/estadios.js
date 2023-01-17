@@ -25,7 +25,7 @@ function store(req, res) {
   const data = req.body;
   const nombre = data.nombre;
   const id_jugadores = data.id_jugadores;
-  const id_canchas_estadios_partidas= data.id_canchas_estadios_partidas;
+  const id_canchas_estadios_partidas = data.id_canchas_estadios_partidas;
   const cesped = data.cesped;
   const administrador = data.administrador;
   const propietario = data.propietario;
@@ -33,7 +33,7 @@ function store(req, res) {
   const direccion = data.direccion;
   const nombre_paises = data.nombre_paises;
   const nombre_ciudades = data.nombre_ciudades;
-  const id_partidas= data.id_partidas;
+  const id_partidas = data.id_partidas;
 
   connection.query(
     `insert into estadios(
@@ -85,7 +85,7 @@ function update(req, res) {
   const direccion = req.body.direccion;
   const nombre_paises = req.body.nombre_paises;
   const nombre_ciudades = req.body.nombre_ciudades;
-  const id_partidas= req.body.id_partidas;
+  const id_partidas = req.body.id_partidas;
 
   connection.query(
     `update estadios SET nombre=?,id_jugadores=?,id_canchas_estadios_partidas=?,cesped=?,administrador=?,propietario=?,ubigeo=?,direccion=?,nombre_paises=?,nombre_ciudades=?,id_partidas=? where id=?;`,
