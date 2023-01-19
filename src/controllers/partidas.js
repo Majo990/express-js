@@ -6,11 +6,16 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-    select p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
+    select pj.id_jugadores as nombre_jugadores,cep.nombre  as nombre_cancha,p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
     left outer join torneos t
     on t.id=p.id_torneos
     left outer  join rondas r
-    on r.id = p.id_rondas `,
+    on r.id = p.id_rondas
+    left outer join canchas_estadios_partidas cep
+    on cep.id_partidas  = p.id
+    left outer join partidas_jugadores pj
+    on pj.id_partidas = p.id
+ `,
 
     function (err, results) {
       res.send(results);
@@ -157,9 +162,29 @@ function logo(req, res) {
    on pj.id = p.puntaje
 
 
-
-
 */
+
+function campoestadiojugador(req, res) {
+  connection.query(
+    `
+    select cep.id_estadios as nombre_estadios, pj.id_jugadores as nombre_jugadores,cep.nombre  as nombre_cancha,p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
+    left outer join torneos t
+    on t.id=p.id_torneos
+    left outer  join rondas r
+    on r.id = p.id_rondas
+    left outer join canchas_estadios_partidas cep
+    on cep.id_partidas  = p.id
+    left outer join partidas_jugadores pj
+    on pj.id_partidas = p.id
+    left outer join canchas_estadios_partidas cep2
+    on cep.id_partidas = p.id
+`,
+    function (error, results) {
+      res.send(results);
+      console.log(error);
+    }
+  );
+}
 
 //creando un jugadores
 function store(req, res) {
@@ -265,4 +290,5 @@ module.exports.partidasController = {
   resultados,
   juego,
   logo,
+  campoestadiojugador,
 };
