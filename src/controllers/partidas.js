@@ -6,15 +6,13 @@ function index(req, res) {
   // with placeholder
   connection.query(
     `
-    select pj.id_jugadores as nombre_jugadores,cep.nombre  as nombre_cancha,p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
+    select cep.nombre  as nombre_cancha,p.*, t.nombre as nombre_torneos , r.nro as nro_rondas  from partidas p
     left outer join torneos t
     on t.id=p.id_torneos
     left outer  join rondas r
     on r.id = p.id_rondas
     left outer join canchas_estadios_partidas cep
     on cep.id_partidas  = p.id
-    left outer join partidas_jugadores pj
-    on pj.id_partidas = p.id
  `,
 
     function (err, results) {
